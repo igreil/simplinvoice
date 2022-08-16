@@ -1,0 +1,162 @@
+% !TeX program  = lualatex
+% !TeX encoding = UTF-8 Unicode
+%-----------------------------------------------------------------------------
+\documentclass[12pt]{scrartcl}		% "article" could probably be made to work
+	\pagestyle{empty}				% Suppress page header and footer
+	\setkomafont{section}{\LARGE}	% Font size of title
+	\KOMAoptions{parskip=full}		% No paragraph indentation
+%-----------------------------------------------------------------------------
+\usepackage[ngerman]{babel}			% Your language of choice
+%-----------------------------------------------------------------------------
+\usepackage{advdate,scrdate}		% For calculating the due date
+\usepackage{fontspec}				% Select font with tabular/lining figures:
+	\setsansfont[Numbers={Monospaced,Lining}]{Source Sans Pro}
+	\renewcommand{\familydefault}{\sfdefault}		% Sans all the way
+%-----------------------------------------------------------------------------
+\usepackage{simplinvoice}			% <= This is what we're here for :)
+		\TaxRate{20}{10}			% For Austria. Default is Germany's 19/7
+									% Only natural numbers for now, please.
+%-----------------------------------------------------------------------------
+\begin{document}
+\section*{Rechnung Nr.\,42/2022\hfill\today}	% Starred => unnumbered section
+%-----------------------------------------------------------------------------
+	\begin{invoice*}[B]				% N = Netto			(Net)
+									% B = Brutto		(Gross)
+									% X = Ohne Steuer	(No Taxes)
+%-----------------------------------------------------------------------------
+		\UseEuro					% The Euro (€) is the default currency.
+		\NumbersOn					% Running item numbers? Your choice.
+		\SeparatorOff				% Horizontal lines? Heck, no.
+%-----------------------------------------------------------------------------
+		% All prices can have up to two decimal places.
+		% Both commas and periods are fine. Leading zeros may 
+		% be omitted, even though it looks decidedly ugly.
+%-----------------------------------------------------------------------------
+		\InvoiceLine[e]{2}{4711}{Schlappeseppel Pils\tab 0,50\,ℓ}		{3,60}
+		\InvoiceLine[e]{12}{4712}{Fritz Kola, süß-sauer \tab 0,33\,ℓ}	{2,20}
+		\InvoiceLine[e]{8}{4799}{Große Pizza}							{15,50}
+		\InvoiceLine{20}{0815}{Druck Plakate \tab A3}					{2,50}
+			% Depending on the item, decimal values are allowed
+		\InvoiceLine{2,25}{—~~~}{Arbeitsstunden Praktikant}				{25}
+	\end{invoice*}
+%-----------------------------------------------------------------------------
+\def\payperiod{8}					% How many days to pay?
+
+Die \textsc{Pizzeria \& Copy Shop GmbH} bedankt sich sehr herzlich für Ihren Auftrag. 
+
+Bitte überweisen Sie den offenen Betrag von 
+\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
+binnen \payperiod~Tagen – bis \DayName{\year}{\month}{\day+\payperiod}, 
+den \AdvanceDate[\payperiod]\today\ – 
+auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
+
+\AdvanceDate[-\payperiod]		% Restore current date
+
+\section*{Rechnung Nr.\,43/2022\hfill\today}
+	\begin{invoice}[N]				% N = Netto			(Net)
+									% B = Brutto		(Gross)
+									% X = Ohne Steuer	(No Taxes)
+%-----------------------------------------------------------------------------
+		%\SetCurrency{₹} 			% Indian Rupees? Sure.
+		\NumbersOff					% Running item numbers? Your choice.
+		\SeparatorOff				% Horizontal lines? Heck, no.
+%-----------------------------------------------------------------------------
+		\InvoiceLine{20}{Fritz Kola, orange \tab 0,33\,ℓ}	{2,20}
+			% Depending on the item, decimal values are allowed
+		\InvoiceLine{10}{Kleine Pizza}							{8,90}
+		\InvoiceLine{500}{Kopien \tab A4}						{0,20}
+		\InvoiceLine{150}{Druck Flyer \tab A5}					{0,72}
+		\InvoiceLine{2,25}{Arbeitsstunden Praktikant}				{25}
+	\end{invoice}
+
+\def\payperiod{21}					% How many days to pay?
+
+Bitte überweisen Sie den offenen Betrag von 
+\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
+binnen \payperiod~Tagen – bis \DayName{\year}{\month}{\day+\payperiod}, 
+den \AdvanceDate[\payperiod]\today\ – 
+auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
+
+\AdvanceDate[-\payperiod]		% Restore current date
+%-----------------------------------------------------------------------------
+\AdvanceDate[+1]				% Invoice with tomorrow's date
+\section*{Rechnung Nr.\,44/2022\hfill\today}
+
+	\begin{invoice}[N]				% N = Netto			(Net)
+									% B = Brutto		(Gross)
+									% X = Ohne Steuer	(No Taxes)
+%-----------------------------------------------------------------------------
+		\NumbersOff					% Running item numbers? Your choice.
+		\SeparatorOff				% Horizontal lines? Heck, no.
+%-----------------------------------------------------------------------------
+		\InvoiceLine{1000}{Kopien \tab A4}						{0,18}
+	\end{invoice}
+
+\def\payperiod{3}					% How many days to pay?
+
+Bitte überweisen Sie den offenen Betrag von 
+\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
+binnen \payperiod~Tagen – bis \DayName{\year}{\month}{\day+\payperiod}, 
+den \AdvanceDate[\payperiod]\today\ – 
+auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
+
+\AdvanceDate[-\payperiod]		% Restore current date
+%-----------------------------------------------------------------------------
+\AdvanceDate[+7]				% Invoice with tomorrow's date
+
+\section*{Rechnung Nr.\,45/2022\hfill\today}
+
+	\begin{invoice}[X]				% N = Netto			(Net)
+									% B = Brutto		(Gross)
+									% X = Ohne Steuer	(No Taxes)
+%-----------------------------------------------------------------------------
+		\NumbersOff					% Running item numbers? Your choice.
+		\SeparatorOff				% Horizontal lines? Heck, no.
+%-----------------------------------------------------------------------------
+		\InvoiceLine{1}{Barauslage}						{532,00}
+	\end{invoice}
+
+\def\payperiod{7}					% How many days to pay?
+
+Bitte überweisen Sie den offenen Betrag von 
+\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
+binnen \payperiod~Tagen – bis \DayName{\year}{\month}{\day+\payperiod}, 
+den \AdvanceDate[\payperiod]\today\ – 
+auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
+
+\AdvanceDate[-\payperiod]		% Restore current date
+
+%-----------------------------------------------------------------------------
+
+\section*{Invoice Nr.\,46/2022\hfill\today}
+\TabPositions{.62\linewidth}	% Sets a tabstop
+
+\makeatletter
+	\renewcommand*\@running		{Nr.}				% Number
+	\renewcommand*\@amount		{Amount}			% Item amount
+	\renewcommand*\@itemnr		{~}					% Item number
+	\renewcommand*\@description	{Description}		% Item description
+	\renewcommand*\@unitprice	{Base Fee}			% Item price
+	\renewcommand*\@totalprice	{Total}				% Item price × amount
+\makeatother
+
+	\begin{invoice*}[B]				% N = Netto			(Net)
+									% B = Brutto		(Gross)
+									% X = Ohne Steuer	(No Taxes)
+%-----------------------------------------------------------------------------
+		\NumbersOff					% Running item numbers? Your choice.
+		\SeparatorOff				% Horizontal lines? Heck, no.
+%-----------------------------------------------------------------------------
+		\InvoiceLine{1}{~}{Administrative Fee \tab(flat)}			{50,00}
+		\InvoiceLine{8,3}{hrs}{Legal Research \tab(Associate)}		{250,00}
+		\InvoiceLine{0,5}{hrs}{Motion drafted \tab(Junior Partner)}	{400,00}
+		\InvoiceLine{0,4}{hrs}{Motion reviewed and filed \tab(Senior Partner)}	{650,00}
+	\end{invoice*}
+
+\def\payperiod{14}					% How many days to pay?
+\enlargethispage{2\baselineskip}
+
+Thank you for patronizing the Law Offices of \textsc{Dewe, Cheatem \& Howe}.
+
+\end{document}
+% EOF
