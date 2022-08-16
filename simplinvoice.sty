@@ -12,99 +12,99 @@
 \ProvidesPackage{simplinvoice}
 	[2022/08/15 v0.1 Simplinvoice by Ingmar Greil]
 %
-\RequirePackage{tabto}			% We could probably do without …
-	\TabPositions{.75\linewidth}	% Sets a tabstop at ¾, accessible via \tab
+%\RequirePackage{siunitx}
+\RequirePackage{tabto}				% We could probably do without â€¦
+	\TabPositions{.75\linewidth}	% Sets a tabstop at Â¾, accessible via \tab
 %
 %=============================================================================
 %				This is simplinvoice 0.1 (2022-08-16)
-% 				© Ingmar Greil, 2022
+% 				Â© Ingmar Greil, 2022.
 %=============================================================================
 %
-% Known issues / wanted features / todo: 
+% Known issues / wanted features / ToDo: 
 %
-% • Remove last traces of German functions, variable names, comments etc.
+% â€¢ Remove last traces of German functions, variable names, comments etc.
 %
-% •	Only natural numbers are  accepted as tax rates for now 
-% 	(i.e., 10, 16, 21 etc. percent – France for one uses reduced rates 
-% 	of 5.5 and 2.1 percent for some goods or services. Switzerland, too.
+% â€¢	Only natural numbers are accepted as tax rates for now 
+% 	(i.e., 10, 16, 21 etc. percent â€“ France for one uses reduced rates 
+% 	of 5.5 and 2.1 percent for some goods or services. Similarly, Switzerland.
 %
-% •	Even though both commas and periods are accepted for price input, all
-% 	calculations will output comma separated values only – for now.
+% â€¢	We also need a configurable thousand separator, as in 100.000 vs. 100 000
 %
-% •	We also need a configurable thousand separator, as in 100.000 vs. 100 000
+% â€¢ Use \InvoiceLine* instead of \InvoiceLine[e]. Generally check starred 
+% 	commands.
 %
-% • Use \InvoiceLine* instead of \InvoiceLine[e]. Check starred commands.
-%
-% •	An interface with babel, to choose language and/or currency automatically
+% â€¢	An interface with babel, to choose language and/or currency automatically
 %=============================================================================
 % Change as needed:
 %=============================================================================
 % Eventually babel is expected to carry a lot of this load
 \newcommand*\@SINVstsi		{19}		% default tax rate
 \newcommand*\@SINVstsii		{7}			% default tax rate, reduced
-\newcommand*\@currency		{\texteuro}	% default currency
+\newcommand*\@currency		{â‚¬}	% default currency
+\newcommand*\@decimalsep	{,}	% decimal separator
 %-----------------------------------------------------------------------------
 \newcommand*\@taxname		{Umsatzsteuer}				% VAT name
 \newcommand*\@taxabrv		{USt.}						% VAT abbreviation
-\newcommand*\@taxred		{~(erm\"a{\ss}igter Satz)}	% "recuced rate"
-% FIXME						Full Unicode support needed
+\newcommand*\@taxred		{(ermÃ¤ÃŸigter Satz)}			% "recuced rate"
 %-----------------------------------------------------------------------------
-\newcommand*\@sumnet		{Zwischensumme}			% Net Total, before taxes
-\newcommand*\@sumtot		{Gesamtsumme}			% Gross Total, with taxes
-\newcommand*\@excl			{\quad zzgl.~}			% excl.
+\newcommand*\@sumnet		{Zwischensumme}	% Net Total, before taxes
+\newcommand*\@sumtot		{Gesamtsumme}	% Gross Total, with taxes
+\newcommand*\@excl			{\quad zzgl.}	% excl.
 %-----------------------------------------------------------------------------
 \newcommand*\@running		{Nr.}			% Number
 \newcommand*\@amount		{Anzahl}		% Item amount
 \newcommand*\@itemnr		{Art.-Nr.}		% Item number
 \newcommand*\@description	{Beschreibung}	% Item description
 \newcommand*\@unitprice		{Einzelpreis}	% Item price
-\newcommand*\@totalprice	{Gesamtpreis}	% Item price × amount
+\newcommand*\@totalprice	{Gesamtpreis}	% Item price Ã— amount
 %=============================================================================
-\newcount\@SINVmwst			\newcount\@SINVmwsti	\newcount\@SINVmwstii
+\newcount\@SINVtaxamnt		\newcount\@SINVtaxamnti	\newcount\@SINVtaxamntii
 \newcount\@SINVcnt			\newcount\@SINVtmp
-\newcount\@SINVsum			\newcount\@SINVtmptmp		% Just some counters
+\newcount\@SINVtotal		\newcount\@SINVtmptmp	% Just some counters
 %-----------------------------------------------------------------------------
 \newdimen\@SINVPosWidth		\newdimen\@SINVAmtWidth	\newdimen\@SINVwdt
 \newdimen\@SINVArtNumWidth	\newdimen\@SINVArtWidth
-\newdimen\@SINVSingleWidth	\newdimen\@SINVTotalWidth	% New dimensions …
+\newdimen\@SINVSingleWidth	\newdimen\@SINVTotalWidth	% New dimensions â€¦
 %-----------------------------------------------------------------------------
 \newif\if@SINVerm			\newif\if@SINVpos		\newif\if@SINVartnum
 \newif\if@SINVfirst			\newif\if@SINVhor		\newif\if@SINVinit
 %-----------------------------------------------------------------------------
-\@SINVPosWidth		=		1em%				Nr.
-\@SINVAmtWidth		=		2em%				Amount
-\@SINVArtNumWidth	=		2.25em%				Article Number
-\@SINVSingleWidth	=		3.25em%				Price Per Unit
-\@SINVTotalWidth	=		4.25em%				Total Price
+\@SINVPosWidth		=		1em%			Nr.
+\@SINVAmtWidth		=		2em%			Amount
+\@SINVArtNumWidth	=		2.25em%			Article Number
+\@SINVSingleWidth	=		3.5em%			Price Per Unit
+\@SINVTotalWidth	=		4.25em%			Total Price
 %-----------------------------------------------------------------------------
-\newcommand*\postnet		{\vskip .5ex}%		Formatting After Net Total
-\newcommand*\pregross		{\vskip .5ex}%		Formatting Before Gross Total
-\newcommand*\headerformat	{\footnotesize}
+\newcommand*\postnet		{\vskip .5ex}	%	Formatting After Net Total
+\newcommand*\pregross		{\vskip .5ex}	%	Formatting Before Gross Total
+\newcommand*\headerformat	{\footnotesize}	%	Invoice table header
 %=============================================================================
 \newcommand*\TaxRate[2]{%					Use like this in your document:
-	\def\@SINVstsi{#1}\def\@SINVstsii{#2}%	\TaxRate{20}{10}
-}
-%-----------------------------------------------------------------------------
+	\def\@SINVstsi	{#1}%					\TaxRate{20}{10}
+	\def\@SINVstsii	{#2}%
+}%----------------------------------------------------------------------------
 \newcommand*\SetCurrency[1]{%				Use like this in your document:
 	\def\@currency{#1}%						\SetCurrency{CHF}
-}
-\newcommand*\UseEuro	{\def\@currency{\texteuro}}%	Shortcuts for EUR 
-\newcommand*\UseDollar	{\def\@currency{\$}}% 			and USD symbols
+}%----------------------------------------------------------------------------
+\newcommand*\UseEuro	{\def\@currency{â‚¬}}%		Shortcuts for EUR 
+\newcommand*\UseDollar	{\def\@currency{\$}}%		and USD symbols
 %-----------------------------------------------------------------------------
-\newcommand*\NumbersOn[0]	{\if@SINVinit\else\global\@SINVpostrue\fi}
-\newcommand*\NumbersOff[0]	{\if@SINVinit\else\global\@SINVposfalse\fi}
-\newcommand*\SeparatorOn[0]	{\if@SINVinit\else\global\@SINVhortrue\fi}
-\newcommand*\SeparatorOff[0]{\if@SINVinit\else\global\@SINVhorfalse\fi}
+\newcommand*\NumbersOn[0]		{\if@SINVinit\else\global\@SINVpostrue\fi}
+\newcommand*\NumbersOff[0]		{\if@SINVinit\else\global\@SINVposfalse\fi}
 %-----------------------------------------------------------------------------
-\newcommand*\Total		{\writeCurrency\@SINVsum}
-\newcommand*\TaxAmnt	{\writeCurrency\@SINVmwst}
-\newcommand*\TaxName	{\@taxname}
-\newcommand*\TaxAbrv	{\@taxabrv}
+\newcommand*\SeparatorOn[0]		{\if@SINVinit\else\global\@SINVhortrue\fi}
+\newcommand*\SeparatorOff[0]	{\if@SINVinit\else\global\@SINVhorfalse\fi}
+%-----------------------------------------------------------------------------
+\newcommand*\Total				{\writeCurrency\@SINVtotal}
+\newcommand*\TaxAmnt			{\writeCurrency\@SINVtaxamnt}
+\newcommand*\TaxName			{\@taxname}
+\newcommand*\TaxAbrv			{\@taxabrv}
 %-----------------------------------------------------------------------------
 \newcommand*\@SINVwrite[1]{%
 	\@tempcnta\the#1
 	\@tempcntb\@tempcnta
-	\divide\@tempcnta100 \the\@tempcnta,%
+	\divide\@tempcnta100 \the\@tempcnta\@decimalsep%
 	\multiply\@tempcnta100\advance\@tempcntb-\@tempcnta
 	\@tempcnta\@tempcntb\divide\@tempcnta10 \the\@tempcnta
 	\multiply\@tempcnta10\advance\@tempcntb-\@tempcnta
@@ -137,7 +137,7 @@
 %-----------------------------------------------------------------------------
 \newcommand*\@readB[1]{%
   \expandafter\if#1\relax\relax
-     \ifnum \@tempcnta > 2
+     \ifnum \@tempcnta > 2	% FIXME German
        \@SINVtmp0\PackageError{simplinvoice}{mehr als zwei
        Nachkommastellen gefunden}
      \else
@@ -147,7 +147,7 @@
    \advance\@tempcnta1
            \multiply\@SINVtmp10
    \@readB\relax
-         \else					% FIXME
+         \else					% FIXME German
            \multiply\@SINVtmp100\PackageError{simplinvoice}{Keine
            Nachkommastellen gefunden}
          \fi
@@ -163,8 +163,8 @@
   \expandafter
   \if#1\relax\relax
      \ifnum \@tempcnta > 2
-								% FIXME
-       \@SINVtmp0\PackageError{simplinvoice}{Mehr als drei Nachkommastellen gefunden}
+								% FIXME German
+       \@SINVtmp0\PackageError{simplinvoice}{Mehr als zwei Nachkommastellen gefunden}
      \fi
      \ifnum \@tempcnta < 2
  \advance\@tempcnta1
@@ -195,45 +195,45 @@
       \sep}%
 \vskip 1.4pt}}
 \newcommand*\@SINVohne{
-  \@SINVsline{\@sumtot}{\writebfCurrency\@SINVsum}}
+  \@SINVsline{\@sumtot}{\writebfCurrency\@SINVtotal}}
 %-----------------------------------------------------------------------------
 \newcommand*\@SINVnetto{%
-	\@SINVsline{\@sumnet}{\writeCurrency\@SINVsum}\postnet%
-	\multiply\@SINVmwsti\@SINVstsi
-	\advance\@SINVmwsti50\divide\@SINVmwsti100
-	\multiply\@SINVmwstii\@SINVstsii
-	\advance\@SINVmwstii50\divide\@SINVmwstii100
-	\@SINVmwst\@SINVmwsti\advance\@SINVmwst\@SINVmwstii
+	\@SINVsline{\@sumnet}{\writeCurrency\@SINVtotal}\postnet%
+	\multiply\@SINVtaxamnti\@SINVstsi
+	\advance\@SINVtaxamnti50\divide\@SINVtaxamnti100
+	\multiply\@SINVtaxamntii\@SINVstsii
+	\advance\@SINVtaxamntii50\divide\@SINVtaxamntii100
+	\@SINVtaxamnt\@SINVtaxamnti\advance\@SINVtaxamnt\@SINVtaxamntii
 	\if@SINVerm
-	\@SINVsline{\@excl\@SINVstsii\,\%~\@taxabrv \@taxred}{\writeCurrency\@SINVmwstii}
+	\@SINVsline{\@excl\@SINVstsii\,\%~\@taxabrv \@taxred}{\writeCurrency\@SINVtaxamntii}
 	\fi
-	\@SINVsline{\@excl\@SINVstsi\,\%~\@taxabrv}{\writeCurrency\@SINVmwsti}
-	\advance\@SINVsum\@SINVmwst
+	\@SINVsline{\@excl\@SINVstsi\,\%~\@taxabrv}{\writeCurrency\@SINVtaxamnti}
+	\advance\@SINVtotal\@SINVtaxamnt
 	\pregross
-	\@SINVsline{\@sumtot}{\writebfCurrency\@SINVsum}%
+	\@SINVsline{\@sumtot}{\writebfCurrency\@SINVtotal}%
 	\writefoot
 }
 %-----------------------------------------------------------------------------
 \newcommand*\@SINVbrutto{
-  \@SINVsline{\@sumtot}{\writebfCurrency\@SINVsum}
-  \multiply\@SINVmwsti\@SINVstsi\multiply\@SINVmwsti2%
+  \@SINVsline{\@sumtot}{\writebfCurrency\@SINVtotal}
+  \multiply\@SINVtaxamnti\@SINVstsi\multiply\@SINVtaxamnti2%
   \@tempcnta100\advance\@tempcnta\@SINVstsi
-  \advance\@SINVmwsti\@tempcnta
+  \advance\@SINVtaxamnti\@tempcnta
   \multiply\@tempcnta2%
-  \divide\@SINVmwsti\@tempcnta
+  \divide\@SINVtaxamnti\@tempcnta
 
-  \multiply\@SINVmwstii\@SINVstsii\multiply\@SINVmwstii2%
+  \multiply\@SINVtaxamntii\@SINVstsii\multiply\@SINVtaxamntii2%
   \@tempcnta100\advance\@tempcnta\@SINVstsii
-  \advance\@SINVmwstii\@tempcnta
+  \advance\@SINVtaxamntii\@tempcnta
   \multiply\@tempcnta2%
-  \divide\@SINVmwstii\@tempcnta
+  \divide\@SINVtaxamntii\@tempcnta
 
-  \@SINVmwst\@SINVmwsti\advance\@SINVmwst\@SINVmwstii
+  \@SINVtaxamnt\@SINVtaxamnti\advance\@SINVtaxamnt\@SINVtaxamntii
   \if@SINVerm
     \@SINVsline{inkl. erm. \@taxabrv \@SINVstsii\%}
-    {\writeCurrency\@SINVmwstii}%
+    {\writeCurrency\@SINVtaxamntii}%
   \fi
-  \@SINVsline{inkl. \@SINVstsi\% \@taxabrv}{\writeCurrency\@SINVmwsti}%
+  \@SINVsline{inkl. \@SINVstsi\% \@taxabrv}{\writeCurrency\@SINVtaxamnti}%
   \writefoot
 }
 %-----------------------------------------------------------------------------
@@ -271,53 +271,55 @@
       }%hbox
      }%vbox
 }}
-
+%-----------------------------------------------------------------------------
 \newcommand*\@InvoiceLine[4][X]{%
-\@InvoiceLineX[#1]{#2}{}{#3}{#4}
+	\@InvoiceLineX[#1]{#2}{}{#3}{#4}
 }
-
+%-----------------------------------------------------------------------------
 \newcommand*\@InvoiceLineX[5][X]{
   \initInvoice
   \advance\@SINVcnt1%
   \@readNum{#5}
   \@SINVtmptmp=\@SINVtmp%
-  \@readNum{#2}\multiply\@SINVtmp\@SINVtmptmp
+  \@readNum{#2}\multiply\@SINVtmp\@SINVtmptmp % FIXME German
   \advance\@SINVtmp99\divide\@SINVtmp100%Aufrunden auf 2 Nachkommastellen.
   \@lineBaseX[#1]{\the\@SINVcnt}{#2}{#3}{#4}{#5}
 }
+%-----------------------------------------------------------------------------
 \newcommand*\@Versandkosten[2][X]{\@VersandkostenX[#1]{#2}}
 \newcommand*\@VersandkostenX[2][X]{
   \initInvoice
   \@readNum{#2}
   \@lineBaseX[#1]{\null}{1}{\null}{Versandkosten}{#2}
 }
+%-----------------------------------------------------------------------------
 \newcommand*\@lineBaseX[6][X]{
-  \global\advance\@SINVsum\@SINVtmp
+  \global\advance\@SINVtotal\@SINVtmp
   \@SINVlineX{#2}{#3}{#4}{#5}{#6\,\@currency}{\writeCurrency\@SINVtmp
     \expandafter\ifx#1X\else\rlap{$^*$}\fi}
   \expandafter
   \ifx#1X
-    \advance\@SINVmwsti\@SINVtmp
+    \advance\@SINVtaxamnti\@SINVtmp
   \else
-    \advance\@SINVmwstii\@SINVtmp\global\@SINVermtrue
+    \advance\@SINVtaxamntii\@SINVtmp\global\@SINVermtrue % FIXME German
   \fi
   \global\@SINVfirstfalse  %horizontale Linien nur beim ersten Artikel
 }
-
+%-----------------------------------------------------------------------------
 \newenvironment*{invoice}[1][X]{\InvoiceStart{#1}{}}{\InvoiceEnd}
 \newenvironment*{invoice*}[1][X]{\InvoiceStart{#1}{X}}{\InvoiceEnd}
 
 \newenvironment*{order}	[0]{\InvoiceStart{X}{}}	{\InvoiceEnd}
 \newenvironment*{order*}[0]{\InvoiceStart{X}{X}}{\InvoiceEnd}
-
+%-----------------------------------------------------------------------------
 \newcommand*{\InvoiceStart}[2]{%
 	\@SINVinitfalse		\@SINVermfalse
-	\@SINVmwsti0		\@SINVmwstii0
+	\@SINVtaxamnti0		\@SINVtaxamntii0
 	\def\@SINVtype{#1}%
 	\global\@SINVpostrue	\global\@SINVhortrue
-	\@SINVcnt0				\@SINVsum0
+	\@SINVcnt0				\@SINVtotal0
 	\@SINVwdt\textwidth
-	\global\@SINVfirsttrue
+	\global\@SINVfirsttrue	% FIXME German
 	\advance\@SINVwdt-\@SINVAmtWidth	% Breite der Spalte Anz
 	\advance\@SINVwdt-\@SINVSingleWidth	% Breite der Spalte Einzelpreis
 	\advance\@SINVwdt-\@SINVTotalWidth	% Breite der Spalte Gesamtpreis
@@ -335,11 +337,11 @@
 		\let\Versandkosten\@Versandkosten
 	\fi
 }
-
+%-----------------------------------------------------------------------------
 \newcommand*{\initInvoice}[0]
 {
   \if@SINVinit
-  \else
+  \else	% FIXME German
     % Breite wegen Anzeige der Positionsnummern korrigieren
     %    \begin{macrocode}
     \if@SINVpos
@@ -347,7 +349,7 @@
       \advance\@SINVwdt-0.4pt
       \advance\@SINVwdt-2\tabcolsep
     \fi
-    %    \end{macrocode}
+    %    \end{macrocode} % FIXME German
     % Breite wegen Anzeige der Artikelnummern korrigieren
     %    \begin{macrocode}
     \if@SINVartnum
@@ -356,12 +358,12 @@
       \advance\@SINVwdt-2\tabcolsep
     \fi
     %    \end{macrocode}
-    % bißchen Platz über der Rechnung
+    % biÃŸchen Platz Ã¼ber der Rechnung
     %    \begin{macrocode}
     \vskip\abovedisplayskip
     %    \end{macrocode}
 
-    % Titelzeile ausgeben
+    % Titelzeile ausgeben	% FIXME German
     \@SINVlineX{	\headerformat	\@running		\hfill}%
               {		\headerformat	\@amount		\hfill}%
               {		\headerformat	\@itemnr		\hfill}%
@@ -380,10 +382,10 @@
   \vskip\doublerulesep\vskip0.4pt
        \expandafter\if\@SINVtype X \@SINVohne
   \else\expandafter\if\@SINVtype N \@SINVnetto
-  \else\expandafter\if\@SINVtype B \@SINVbrutto
+  \else\expandafter\if\@SINVtype B \@SINVbrutto	% FIXME German
   \else\PackageError{simplinvoice}{Unbekannter Rechnungstyp `\@SINVtype'}%
   \fi\fi\fi
-  \global\@SINVsum\@SINVsum\global\@SINVmwst\@SINVmwst
+  \global\@SINVtotal\@SINVtotal\global\@SINVtaxamnt\@SINVtaxamnt
   \vskip\belowdisplayskip
 }
 \endinput

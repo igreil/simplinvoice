@@ -138,8 +138,10 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 	\renewcommand*\@description	{Description}		% Item description
 	\renewcommand*\@unitprice	{Base Fee}			% Item price
 	\renewcommand*\@totalprice	{Total}				% Item price × amount
+	\renewcommand*\@decimalsep	{.}					% decimal separator
 \makeatother
 
+\UseDollar
 	\begin{invoice*}[B]				% N = Netto			(Net)
 									% B = Brutto		(Gross)
 									% X = Ohne Steuer	(No Taxes)
@@ -147,16 +149,15 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 		\NumbersOff					% Running item numbers? Your choice.
 		\SeparatorOff				% Horizontal lines? Heck, no.
 %-----------------------------------------------------------------------------
-		\InvoiceLine{1}{~}{Administrative Fee \tab(flat)}			{50,00}
-		\InvoiceLine{8,3}{hrs}{Legal Research \tab(Associate)}		{250,00}
-		\InvoiceLine{0,5}{hrs}{Motion drafted \tab(Junior Partner)}	{400,00}
-		\InvoiceLine{0,4}{hrs}{Motion reviewed and filed \tab(Senior Partner)}	{650,00}
+		\InvoiceLine{1}{~}{Administrative Fee \tab(flat)}			{50.00}
+		\InvoiceLine{8.3}{hrs}{Legal Research \tab(Associate)}		{250.00}
+		\InvoiceLine{.5}{hrs}{Motion drafted \tab(Junior Partner)}	{400.00}
+		\InvoiceLine{.4}{hrs}{Motion reviewed and filed \tab(Senior Partner)}	{655.00}
 	\end{invoice*}
 
 \def\payperiod{14}					% How many days to pay?
 \enlargethispage{2\baselineskip}
 
 Thank you for patronizing the Law Offices of \textsc{Dewe, Cheatem \& Howe}.
-
 \end{document}
 % EOF
