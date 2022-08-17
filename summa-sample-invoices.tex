@@ -28,6 +28,9 @@
 %-----------------------------------------------------------------------------
 \begin{document}
 \section*{Rechnung Nr.\,42/2022\hfill\today}	% Starred => unnumbered section
+
+Die \textsc{Pizzeria \& Copy Shop GmbH} dankt sehr herzlich für Ihren Auftrag:
+
 %-----------------------------------------------------------------------------
 	\begin{invoice*}[B]				% N = Netto			(Net)
 									% B = Brutto		(Gross)
@@ -38,24 +41,22 @@
 		\SeparatorOff				% Horizontal lines? Heck, no.
 
 %-----------------------------------------------------------------------------
-		% All prices can have up to two decimal places.
+		% All prices can have up to (!) two decimal places.
 		% Both commas and periods are fine. Leading zeros may 
 		% be omitted, even though it looks decidedly ugly.
 %-----------------------------------------------------------------------------
-
 		\Credit{Anzahlung}{100}
-		\InvoiceLine[e]{2}{4711}{Schlappeseppel Pils\tab 0,50\,ℓ}		{3,60}
-		\InvoiceLine[e]{12}{4712}{Fritz Kola, süß-sauer \tab 0,33\,ℓ}	{2,20}
+		\Shipping{15}
+		\InvoiceLine[e]{2}{4711}{Schlappeseppel Pils\tab 0,50\,ℓ}		{3,6}
+		\InvoiceLine[e]{12}{4712}{Koala-Kola, süß-sauer \tab 0,33\,ℓ}	{2,2}
 		\InvoiceLine[e]{8}{4799}{Große Pizza}							{15,50}
 		\InvoiceLine{20}{0815}{Druck Plakate \tab A3}					{2,50}
-			% Depending on the item, decimal values are allowed
-		\InvoiceLine{2,25}{—~~~}{Arbeitsstunden Praktikant}				{25}
-		\Shipping{15}
+			% Decimal values are allowed:
+		\InvoiceLine{2,25}{—~~~}{Arbeitsstunden Praktikant}			{25}
 	\end{invoice*}
 %-----------------------------------------------------------------------------
-\def\payperiod{8}					% How many days to pay?
 
-Die \textsc{Pizzeria \& Copy Shop GmbH} bedankt sich sehr herzlich für Ihren Auftrag. 
+		\def\payperiod{8}			% How many days to pay?
 
 Bitte überweisen Sie den offenen Betrag von 
 \Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
@@ -74,11 +75,11 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 		\NumbersOff					% Running item numbers? Your choice.
 		\SeparatorOff				% Horizontal lines? Heck, no.
 %-----------------------------------------------------------------------------
-		\InvoiceLine{20}{Fritz Kola, orange \tab 0,33\,ℓ}	{2,20}
+		\InvoiceLine{20}{Koala-Kola, orange \tab 0,33\,ℓ}	{2,20}
 			% Depending on the item, decimal values are allowed
 		\InvoiceLine{10}{Kleine Pizza}							{8,90}
 		\InvoiceLine{500}{Kopien \tab A4}						{0,20}
-		\InvoiceLine{150}{Druck Flyer \tab A5}					{0,72}
+		\InvoiceLine{150}{Druck Flyer \tab A5}					{0,71}
 		\InvoiceLine{2,25}{Arbeitsstunden Praktikant}				{25}
 	\end{invoice}
 
@@ -91,6 +92,7 @@ den \AdvanceDate[\payperiod]\today\ –
 auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 
 \AdvanceDate[-\payperiod]		% Restore current date
+
 %-----------------------------------------------------------------------------
 \AdvanceDate[+1]				% Invoice with tomorrow's date
 \section*{Rechnung Nr.\,44/2022\hfill\today}
@@ -155,6 +157,7 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 \makeatother
 
 \UseDollar
+		\TaxRate{20}{0}			
 	\begin{invoice*}[B]				% N = Netto			(Net)
 									% B = Brutto		(Gross)
 									% X = Ohne Steuer	(No Taxes)
@@ -162,7 +165,7 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 		\NumbersOff					% Running item numbers? Your choice.
 		\SeparatorOff				% Horizontal lines? Heck, no.
 %-----------------------------------------------------------------------------
-		\InvoiceLine{1}{~}{Administrative Fee \tab(flat)}			{50.00}
+		\InvoiceLine[e]{1}{~}{Administrative Fee \tab(flat)}			{50.00}
 		\InvoiceLine{8.3}{hrs}{Legal Research \tab(Associate)}		{250.00}
 		\InvoiceLine{.5}{hrs}{Motion drafted \tab(Junior Partner)}	{400.00}
 		\InvoiceLine{.4}{hrs}{Motion reviewed and filed \tab(Senior Partner)}	{655.00}
