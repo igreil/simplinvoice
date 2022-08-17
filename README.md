@@ -7,11 +7,11 @@ A simple LaTeX class for creating invoices, geared towards European users.
 Given the name, the class strives to be a simple class to meet my simple
 needs: to create simple invoices, optionally showing taxes, and caluclating
 everything automatically. Importantly, it can handle regular and reduced tax
-rates in the same invoice, which many (most) other [classes I found on CTAN]
-(https://ctan.org/topic/invoice) can not.
+rates in the same invoice, which many (most) other 
+[classes I found on CTAN](https://ctan.org/topic/invoice) can not.
 
-It started out as a fork of [_rechnung.sty_]
-(https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
+It started out as a fork of 
+[_rechnung.sty_](https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
 (Rechnung being the German word for invoice). 
 
 There are [other known forks](https://github.com/tomka/rechnung) out there,
@@ -37,9 +37,9 @@ longer consider “simple”.
 
 ## Copyright
 
-© 1998 M.G. Berberich 	<berberic@fmi.uni-passau.de>  
-© 2001 Ulrich Sibiller 	<uli42@web.de>  
-© 2022 Ingmar Greil 	<ingmar.greil@gmail.com>  
+© 1998 M.G. Berberich  
+© 2001 Ulrich Sibiller  
+© 2022 Ingmar Greil  
 
 ### LaTeX Project Public License (LPPL) v1.3
 
