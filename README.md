@@ -1,4 +1,4 @@
-# simplinvoice
+# simplinvoice v0.1
 
 A simple LaTeX class for creating invoices, geared towards European users.
 
@@ -7,11 +7,17 @@ A simple LaTeX class for creating invoices, geared towards European users.
 Given the name, the class strives to be a simple class to meet my simple
 needs: to create simple invoices, optionally showing taxes, and caluclating
 everything automatically. Importantly, it can handle regular and reduced tax
-rates in the same invoice, which many (most) other classes I found on CTAN
-can not.
+rates in the same invoice, which many (most) other [classes I found on CTAN]
+(https://ctan.org/topic/invoice) can not.
 
-It started out as a fork from _rechnung.sty_ (Rechnung being the
-German word for invoice). 
+It started out as a fork of [_rechnung.sty_]
+(https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
+(Rechnung being the German word for invoice). 
+
+There are [other known forks](https://github.com/tomka/rechnung) out there,
+and while I am grateful for inspiration and the occasional snippet of code,
+they implement functionality that I, as a non-German do not need and no
+longer consider “simple”.
 
 ## Known issues / Bug / Wanted Improvements
 
@@ -19,7 +25,9 @@ German word for invoice).
 - We need a configurable thousand separator, as in 100.000 vs. 100 000
   (There is code out there, just need to implement it. Inital attempt with
   siunitx have not been entirely sucessfull.)
-- Only natural numbers are accepted as tax rates for now (i.e., 10, 16, 21 etc. percent – France for one uses reduced rates of 5.5 and 2.1 percent for some goods or services. Similarly, Switzerland.
+- Only natural numbers are accepted as tax rates for now (i.e., 10, 16, 21
+  etc. percent – France for one uses reduced rates of 5.5 and 2.1 percent for
+  some goods or services. Similarly, Switzerland.
 - Use \InvoiceLine* instead of \InvoiceLine[e]. Generally improve the handling
   of starred commands.
 - An interface with babel, to choose language and/or currency (tax rates?)
@@ -29,11 +37,11 @@ German word for invoice).
 
 ## Copyright
 
-© 1998 M.G. Berberich 	<berberic@fmi.uni-passau.de>
-© 2001 Ulrich Sibiller 	<uli42@web.de>
-© 2022 Ingmar Greil 	<ingmar.greil@gmail.com>
+© 1998 M.G. Berberich 	<berberic@fmi.uni-passau.de>  
+© 2001 Ulrich Sibiller 	<uli42@web.de>  
+© 2022 Ingmar Greil 	<ingmar.greil@gmail.com>  
 
-## LaTeX Project Public License (LPPL) v1.3
+### LaTeX Project Public License (LPPL) v1.3
 
 This work may be distributed and/or modified under the conditions of the LaTeX
 Project Public License, either version 1.3 of this license or (at your
@@ -49,9 +57,7 @@ distribution was allowed, as long as the files were ditributed in its
 entirety. (To cover that legal requirement, the legacy code "Original310.tgz"
 is distributed as well, though not needed.)
 
-#### Original German License
-
-[Original by M.G. Berberich]
+#### Original German License by M.G. Berberich
 
 Da das Paket ohne jegliche Kosten lizenziert wird, besteht keinerlei
 Gewährleistung. Ich hafte weder für unmittelbar noch mittelbar entstehende
