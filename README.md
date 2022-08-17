@@ -19,7 +19,12 @@ and while I am grateful for inspiration and the occasional snippet of code,
 they implement functionality that I, as a non-German do not need and no
 longer consider “simple”. 
 
-Also, the created invoice table looks downright ugly. (Who needs vertical bars?)
+Also, the created invoice table looks downright ugly. (Seriously, who 
+needs vertical bars?)
+
+# Changelog
+
+v.01 Forked from rechnung.sty. Tidyed up some code. The basics.
 
 ## Known issues / Bug / Wanted Improvements
 
@@ -34,6 +39,8 @@ Also, the created invoice table looks downright ugly. (Who needs vertical bars?)
   of starred commands.
 - An interface with babel, to choose language and/or currency (tax rates?)
   automatically
+- Documentation
+- When using \Credit, store credit larger than the amount owed leads to errors
 
 ## License and Disclaimer
 
