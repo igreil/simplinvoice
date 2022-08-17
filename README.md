@@ -1,26 +1,25 @@
-# simplinvoice v0.1
+# summa v0.1
 
 A simple LaTeX class for creating invoices, geared towards European users.
 
 ## Introduction and History
 
-Given its name, the class strives to be a simple class to meet my simple
-needs: to create simple invoices, optionally showing taxes, and caluclating
-everything automatically. Importantly, it can handle regular and reduced tax
-rates in the same invoice, which many (most) other 
-[classes I found on CTAN](https://ctan.org/topic/invoice) can not.
+The class strives to be a simple class to meet my simple needs: to create
+simple invoices, optionally showing taxes, and caluclating everything
+automatically. Importantly, it can handle regular and reduced tax rates in
+the same invoice, which many (most) other[classes I found on CTAN]
+(https://ctan.org/topic/invoice) can not.
 
 It started out as a fork of 
 [_rechnung.sty_](https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
 (Rechnung being the German word for invoice). 
-
 There are [other known forks](https://github.com/tomka/rechnung),
 and while I am grateful for inspiration and the occasional snippet of code,
 they implement functionality that I, as a non-German do not need and no
 longer consider “simple”. 
 
-Also, the created invoice table looks downright ugly. (Seriously, who 
-needs vertical bars?)
+Also, the created invoice tables look downright ugly. (Seriously, who 
+needs vertical bars? Or most hoizontal ones, for that matter?)
 
 # Changelog
 
