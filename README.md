@@ -42,10 +42,14 @@ v.01 Forked from rechnung.sty. Tidyed up some code. The basics.
 - Make a starred version of \Credit that is not a running item, but deducted
   at the bottom with the taxes. Same for shipping, or other random items?
 - What about percent discounts? ("3% Repeat Customer Discount")
-- What about 0% tax items? (Fees, cash repayments etc.)
+- What about 0% tax items? (Fees, cash repayments etc.) \ZeroTaxItem ?
 - Option to have $ before amount, € after: $10 <=> 10 €
 - Layout issues with single digit tax amounts (e.g. 19/7%)
 - Issues with X class: \TaxAmnt uses the last value instead of zero
+- An easy way to add a rule, or some vertical white space
+- QR Code for easy online banking (QR-Code / Giro-Code)
+- Perhaps a counter for invoice numbers, autoamtically 
+incremented and writen to an external file?
 
 ## License and Disclaimer
 

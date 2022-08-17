@@ -1,11 +1,7 @@
-Short Reference summa.sty V0.1
-======================================
+Short Reference summa.sty v0.1 										2022-08-17
+==============================================================================
 
-This style file was very briefly named "simplinvoice". Despite the
-slight difference in name, it has been renamed to "summa" 
-(Latin for sum, result) to avoid confusion with Mathias Lohne's
-"simpleinvoice" (with an e) => https://ctan.org/pkg/simpleinvoice
-		
+This is summa, a LaTeX class for creating simple, elegant invoices.
 First, load the package in the header as any other:
 
 	\usepackage{summa} 
@@ -41,8 +37,8 @@ then be specified as the second paramter:
 There are three types of invoices:
 			
 			- "X" (no taxes/default)
-			- "B" (Brutto, gross) 			- "G" (Gross, an alias for "B")
 			- "N" (Netto, net)
+			- "B" (Brutto, gross) 			- "G" (Gross, an alias for "B")
 
 Note: 	If you work within the legal framework of Germany, you might want to 
 		take a look at some other forks of the original rechnung.sty:
@@ -58,21 +54,19 @@ Note: 	If you work within the legal framework of Germany, you might want to
 The type of invoice is specified at the begin of the environment, like so:
 
 		\begin{invoice}[X]	…	\end{invoice}		
+		\begin{invoice}[N]	…	\end{invoice}
 		\begin{invoice}[B]	…	\end{invoice}
 		\begin{invoice}[G]	…	\end{invoice}		
-		\begin{invoice}[N]	…	\end{invoice}
 
 If omitted, type X is assumed by default. Any other letter will return an error.
 
-–	Type X invoices simply lists all items "as is". The issue of taxes will 
+–	Type X invoices simply list all items "as is". The issue of taxes will 
 	not be touched upon.
-
-–	Type B/G invoices are meant for consumers. They show the final price, including
-	all applicable taxes, only pointing out how much tax is contained in that sum.
-
 –	Type N invoices list a net price first, only then adding taxes and calculating
 	a final sum to be paid. They are meant for Vorsteuerabzugsberechtigte ;), i.e.
-	professionals that are entitled to deduct input tax.
+	professionals and non-consumers that are entitled to deduct input tax.
+–	Type B/G invoices are meant for consumers. They show the final price, including
+	all applicable taxes, only pointing out how much tax is contained in that sum.
 
 FIXME Below
 
@@ -88,18 +82,34 @@ Trennlinien zwischen den Artikeln ein/ausschalten (default: ein)
 
  Währung ändern (default: Euro)
  ----------------------------
- \DMark
- \Euro
- \Waehrung{Währungszeichen}
+ 
+ \UseEuro
+ \UseDollar
 
  Setzen der Steuersätze (voller, ermäßigter), (default: 19% / 7%)
  ---------------------------------------------------------------
- \Steuersatz{19}{7}
+\TaxRate{20}{10} 
+\SetCurrency{CHF}
 
- Versandkosten einfügen
- ----------------------
- voller Steuersatz:     \Versandkosten{5,90}
- ermäßigter Steuersatz: \Versandkosten[e]{5,90}
+\NumbersOn
+\NumbersOff
+
+\SeparatorOn	% to be removed permanently
+\SeparatorOff	% horizontal lines are ugly
+
+\Total
+
+\TaxAmnt
+\TaxName
+\TaxAbrv
+
+\InvoiceLine
+\Credit{}{}
+
+\Shipping{5,90}
+\Shipping*{5,90}	% reduced tax
+ 
+\InvoiceLine
 
  Posten/Artikel eintragen: [e] = ermäßigter Steuersatz
  -----------------------------------------------------
@@ -109,11 +119,9 @@ Trennlinien zwischen den Artikeln ein/ausschalten (default: ein)
  \Artikel{1}{h Kabelverlegung}{60,00} 
  \Artikel{1}{ArtikelNummer}{h Kabelverlegung}{60,00}
 
-Nachkommastellen müssen immer zweistellig sein, sonst wird nicht richtig
-gerechnet!
-
 Nach Verwendung der Umgebung lassen sich im Text noch \Mehrwertsteuer
 und \Gesamtsumme verwenden.
 
-The cool-sounding, "vectigaliaque" (loosely translated as 
-"… and taxes") has been considered, but rejected as too cumbersome.
+\TaxAmnt
+\TaxName
+\TaxAbrv

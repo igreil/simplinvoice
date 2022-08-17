@@ -1,6 +1,5 @@
 % !TeX program  = lualatex
 % !TeX encoding = UTF-8 Unicode
-%
 %-----------------------------------------------------------------------------
 %
 % 				This is summa-sample-invoices.tex
@@ -36,27 +35,25 @@ Die \textsc{Pizzeria \& Copy Shop GmbH} dankt sehr herzlich für Ihren Auftrag:
 									% B = Brutto		(Gross)
 									% X = Ohne Steuer	(No Taxes)
 %-----------------------------------------------------------------------------
-		\UseEuro					% The Euro (€) is the default currency.
-		\NumbersOn					% Running item numbers? Your choice.
+%		\UseEuro					% The Euro (€) is the default currency.
+		\NumbersOff					% Running item numbers? Your choice.
 		\SeparatorOff				% Horizontal lines? Heck, no.
-
 %-----------------------------------------------------------------------------
 		% All prices can have up to (!) two decimal places.
 		% Both commas and periods are fine. Leading zeros may 
 		% be omitted, even though it looks decidedly ugly.
 %-----------------------------------------------------------------------------
-		\Credit{Anzahlung}{100}
-		\Shipping{15}
-		\InvoiceLine[e]{2}{4711}{Schlappeseppel Pils\tab 0,50\,ℓ}		{3,6}
-		\InvoiceLine[e]{12}{4712}{Koala-Kola, süß-sauer \tab 0,33\,ℓ}	{2,2}
+		\InvoiceLine[e]{2}{4711}{Urinacanis Pale Ale\tab 0,50\,ℓ}		{3,60}
+		\InvoiceLine[e]{12}{4712}{Koala-Kola, süß-sauer \tab 0,33\,ℓ}	{2,20}
 		\InvoiceLine[e]{8}{4799}{Große Pizza}							{15,50}
 		\InvoiceLine{20}{0815}{Druck Plakate \tab A3}					{2,50}
-			% Decimal values are allowed:
-		\InvoiceLine{2,25}{—~~~}{Arbeitsstunden Praktikant}			{25}
+			% Decimal values are allowed, in principle:
+		\InvoiceLine{2,25}{---~~~}{Arbeitsstunden Praktikant}			{25,50}
+		\Shipping{3,90}
+		\Credit{Anzahlung}{120,00}
 	\end{invoice*}
 %-----------------------------------------------------------------------------
-
-		\def\payperiod{8}			% How many days to pay?
+	\def\payperiod{8}			% How many days to pay?
 
 Bitte überweisen Sie den offenen Betrag von 
 \Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
@@ -67,7 +64,7 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 \AdvanceDate[-\payperiod]		% Restore current date
 
 \section*{Rechnung Nr.\,43/2022\hfill\today}
-	\begin{invoice}[N]				% N = Netto			(Net)
+	\begin{invoice*}[N]				% N = Netto			(Net)
 									% B = Brutto		(Gross)
 									% X = Ohne Steuer	(No Taxes)
 %-----------------------------------------------------------------------------
@@ -75,13 +72,9 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 		\NumbersOff					% Running item numbers? Your choice.
 		\SeparatorOff				% Horizontal lines? Heck, no.
 %-----------------------------------------------------------------------------
-		\InvoiceLine{20}{Koala-Kola, orange \tab 0,33\,ℓ}	{2,20}
-			% Depending on the item, decimal values are allowed
-		\InvoiceLine{10}{Kleine Pizza}							{8,90}
-		\InvoiceLine{500}{Kopien \tab A4}						{0,20}
-		\InvoiceLine{150}{Druck Flyer \tab A5}					{0,71}
-		\InvoiceLine{2,25}{Arbeitsstunden Praktikant}				{25}
-	\end{invoice}
+		\InvoiceLine{1}{~}{Leisure Suit, Mod. “Matris Fututor”}		{2249,90}
+		\InvoiceLine{3,5}{hrs}{Misc. Sewing Work}					{68}
+	\end{invoice*}
 
 \def\payperiod{21}					% How many days to pay?
 
@@ -95,6 +88,8 @@ auf unser Konto DE75\;5121\;0800\;1245\;1261\;99.
 
 %-----------------------------------------------------------------------------
 \AdvanceDate[+1]				% Invoice with tomorrow's date
+
+\clearpage
 \section*{Rechnung Nr.\,44/2022\hfill\today}
 
 	\begin{invoice}[N]				% N = Netto			(Net)

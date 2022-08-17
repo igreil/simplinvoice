@@ -1,0 +1,144 @@
+% !TeX program  = lualatex
+% !TeX encoding = UTF-8 Unicode
+%-----------------------------------------------------------------------------
+% 									This is summa-sample-letter.tex
+% 									A current version can be downloaded from
+%									https://github.com/igreil/summa
+%-----------------------------------------------------------------------------
+\documentclass[fontsize=11pt,parskip=full]{scrlttr2}
+	\LoadLetterOption{DIN}			% Some default values for German letters
+	\pagestyle{empty}				% Suppress page header and footer
+	\KOMAoptions{enlargefirstpage,
+				parskip=full}		% No paragraph indentation, done correctly
+%	\linespread{1.125}
+%-----------------------------------------------------------------------------
+\newcommand{\myFirstName}	{Nomen}				
+\newcommand{\myLastName}	{Nescio}
+\setkomavar{fromname}		{\myFirstName{}~\myLastName{}}
+\setkomavar{fromaddress}	{Some Street 22/7, 1000 Wien}
+%-----------------------------------------------------------------------------
+\setkomavar{yourref}		[Nummer]		{\invoicenumber}
+\setkomavar{customer}		[Fälligkeit]	{\duedate}
+\setkomavar{date}			[Datum]			{\today}
+%-----------------------------------------------------------------------------
+\setkomavar{firsthead}{%
+	\begin{center}{%
+		\fontsize{38}{40}\selectfont	% Switch to font size 38pt for header
+		\color{mycolor!50}				% The chosen color, half as colorful
+			\textsc{Pizzeria}
+		\color{mycolor}
+			\textsc{\& Copy Shop}
+	}\\[-.35em]{%
+		\color{mycolor!50}
+			\rule{\textwidth}{.75pt}
+	}
+	\end{center}
+	\begin{flushright}
+		\color{mycolor}
+			\vspace{-3.5em}\par
+			Some Street 22/7, 1000 Wien • www.example.com
+			 • DE02\;1001\;0010\;0006\;8201\;01
+	\end{flushright}
+}%----------------------------------------------------------------------------
+\usepackage[ngerman]{babel}					% Your language of choice
+%-----------------------------------------------------------------------------
+\usepackage[absolute]{textpos}				% Needed for the QR-code
+\usepackage[forget]{qrcode}					% No caching of QR-codes
+\usepackage{tcolorbox, xcolor, graphicx}	% Graphics packages
+	\definecolor{mycolor}{rgb}{.25,.25,.9}	% see xcolor manual for more
+%-----------------------------------------------------------------------------
+\usepackage{xstring}						% For string manipulation
+\usepackage{soul}							% For underlining
+\usepackage{scrdate,advdate}				% For calculating the due day/date
+\usepackage{fmtcount}						% For spelling out the days
+%-----------------------------------------------------------------------------
+\usepackage{fontspec}				% Select font with tabular/lining figures:
+	\renewcommand{\familydefault}{\sfdefault}		% Sans all the way
+	\setsansfont[Numbers={Monospaced,Lining}]{Source Sans Pro}
+	\defaultfontfeatures{% 
+		SmallCapsFeatures = {%
+			Letters = SmallCaps,
+			Numbers = Lining,
+			LetterSpace = -.5
+		}, 
+		Ligatures = {%
+			Common, TeX, Required, Contextual
+		},
+	}
+%-----------------------------------------------------------------------------
+\usepackage{summa}					% <= This is what we're here for :)
+		\TaxRate{20}{10}			% For Austria. Default is Germany's 19/7
+									% Only natural numbers for now, please.
+\providecommand*\duedate{%
+	\AdvanceDate[\payperiod]\today
+}%----------------------------------------------------------------------------
+\begin{document}
+
+	\def\payperiod				{7}				% How many days to pay?
+	\def\invoicenumber			{42}			% Reference/invoce number
+			
+\setkomavar{subject}{Rechnung Nr.~\invoicenumber}
+
+	\begin{letter}{%
+						Ms. C. Ustomer\\
+						Over the Rainbow, Suite 200\\
+						1234 Wien\\
+						\vspace{.25em}\par
+						\ul{per E-Mail} \hfill\emph{customer@example.org}
+	}
+
+		\opening{Sehr geehrte Damen und Herren\kern 1pt !}
+
+		Die \textsc{Pizzeria \& Copy Shop GmbH} dankt sehr herzlich 
+		für Ihren Auftrag:
+
+		\begin{invoice*}[B]				% N = Netto			(Net)
+										% B = Brutto		(Gross)
+			\NumbersOff					% X = Ohne Steuer	(No Taxes)
+			\SeparatorOff
+
+%=============================================================================
+	\InvoiceLine[e]{48}{47-11}{Urinacanis Pale Ale\tab 0,50\,ℓ}		{3,60}
+	\InvoiceLine[e]{21}{47-12}{Koala-Kola, süß-sauer \tab 0,33\,ℓ}	{2,20}
+	\InvoiceLine[e]{8}{47-99}{Große Pizza}							{15,50}
+	\InvoiceLine{250}{08-15}{Druck Plakate \tab A3}					{1,75}
+	\InvoiceLine{2,5}{---~~~}{Arbeitsstunden Praktikant}			{25,50}
+%=============================================================================
+
+		\end{invoice*}
+
+		Bitte überweisen Sie den offenen Betrag von 
+		\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
+		binnen \numberstringnum{\payperiod}~Tagen – bis \DayName{\year}{\month}{\day+\payperiod}, den \AdvanceDate[\payperiod]\today\ – 
+		auf unser Konto bei der X-Bank.
+
+		\AdvanceDate[-\payperiod]				% Restore current date
+
+\begin{textblock*}{10cm}(13.5cm,4.5cm)%
+	\begin{minipage}[c]{6,75cm}
+%		Draw a border around the QR Code:
+		\begin{tcolorbox}[colback=white,grow to right by=-17mm]
+%
+	\def\creditor	{Pizzeria Copy Shop}
+	\def\bic		{PBNKDEFF}					% => Postbank
+	\def\iban		{DE02100100100006820101}	% valid test IBAN
+
+% FIXME Need to strip \Total of the € sign and feed the raw value.
+	\def\amount		{1}							% amount in EUR
+
+% No comments, linebreaks etc. below. Do. Not. Touch!
+\qrcode[height=4cm]{BCD\?001\?1\?SCT\?\bic\?\creditor\?\iban\?EUR\amount\?\?Rechnungsnr.\ \invoicenumber/\the\year\?\?}
+		\end{tcolorbox}
+	\end{minipage}
+\end{textblock*}
+
+% Conforming with Austrian standards:
+\begin{textblock*}{2cm}(18.15cm,5.75cm)%
+	\rotatebox{90}{\colorbox{white}{Zahlen mit Code}}
+\end{textblock*}
+
+		\closing{Mit freundlichen Grüßen}
+
+	\end{letter}
+\end{document}
+% EOF

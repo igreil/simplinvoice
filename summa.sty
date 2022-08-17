@@ -12,16 +12,16 @@
 \ProvidesPackage{summa}
 	[2022/08/15 v0.1 Summa by Ingmar Greil]
 %
-%\RequirePackage{siunitx}
+%\RequirePackage{siunitx}			% Needed for the formatting of numbers
 \RequirePackage{tabto}				% We could probably do without …
 	\TabPositions{.75\linewidth}	% Sets a tabstop at ¾, accessible via \tab
 %
 %=============================================================================
-%				This is summa 0.1 (2022-08-17)
-% 				© Ingmar Greil, 2022.
+%		This is summa 0.1											2022-08-17
+%     © Ingmar Greil, 2022.
 %=============================================================================
 %
-% Known issues / wanted features / ToDo: 
+%		Known issues / wanted features / ToDo: 
 %
 % • Remove last traces of German functions, variable names, comments etc.
 %
@@ -79,7 +79,7 @@
 %-----------------------------------------------------------------------------
 \newcommand*\postnet		{\vskip .5ex}	%	Formatting After Net Total
 \newcommand*\pregross		{\vskip .5ex}	%	Formatting Before Gross Total
-\newcommand*\headerformat	{\footnotesize}	%	Invoice table header
+\newcommand*\headerformat	{\footnotesize}	%	Invoice table header formatting
 %=============================================================================
 \newcommand*\TaxRate[2]{%					Use like this in your document:
 	\def\@SUMAstsi	{#1}%					\TaxRate{20}{10}
@@ -134,8 +134,7 @@
 	\expandafter\expandafter\expandafter\expandafter
 	\expandafter\expandafter\expandafter\@readA
 	\fi\fi\fi
-}
-%-----------------------------------------------------------------------------
+}%----------------------------------------------------------------------------
 \newcommand*\@readB[1]{%
   \expandafter\if#1\relax\relax
      \ifnum \@tempcnta > 2	% FIXME German
@@ -213,8 +212,7 @@
 	\pregross
 	\@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}%
 	\writefoot
-}
-%-----------------------------------------------------------------------------
+}%----------------------------------------------------------------------------
 \newcommand*\@SUMAbrutto{
   \@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}
   \multiply\@SUMAtaxamnti\@SUMAstsi\multiply\@SUMAtaxamnti2%
@@ -236,12 +234,10 @@
   \fi
   \@SUMAsline{inkl. \@SUMAstsi\% \@taxabrv}{\writeCurrency\@SUMAtaxamnti}%
   \writefoot
-}
-%-----------------------------------------------------------------------------
-\newcommand*{\sep}[0]{%
-\hskip\tabcolsep
-}
-%-----------------------------------------------------------------------------
+}%----------------------------------------------------------------------------
+\newcommand*{\sep}[0]{%	Next column
+	\hskip\tabcolsep
+}%----------------------------------------------------------------------------
 \newcommand*\@SUMAlineX[6]{{
 \goodbreak\nointerlineskip
     \vbox{
@@ -337,19 +333,15 @@
 	\ifx#2X
 		\global\@SUMAartnumtrue
 		\let\InvoiceLine\@InvoiceLineX
-		\let\Posten\@InvoiceLineX
 		\let\Shipping\@ShippingX
 		\let\Credit\@CreditX
-
 	\else
 		\global\@SUMAartnumfalse
 		\let\InvoiceLine\@InvoiceLine
-		\let\Posten\@InvoiceLine
 		\let\Shipping\@Shipping
 		\let\Credit\@CreditX
 	\fi
-}
-%-----------------------------------------------------------------------------
+}%----------------------------------------------------------------------------
 \newcommand*{\initInvoice}[0]
 {
   \if@SUMAinit
