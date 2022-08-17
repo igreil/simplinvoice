@@ -2,9 +2,9 @@
 
 A simple LaTeX class for creating invoices, geared towards European users.
 
-## Introduction And History
+## Introduction and History
 
-Given the name, the class strives to be a simple class to meet my simple
+Given its name, the class strives to be a simple class to meet my simple
 needs: to create simple invoices, optionally showing taxes, and caluclating
 everything automatically. Importantly, it can handle regular and reduced tax
 rates in the same invoice, which many (most) other 
@@ -14,10 +14,12 @@ It started out as a fork of
 [_rechnung.sty_](https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
 (Rechnung being the German word for invoice). 
 
-There are [other known forks](https://github.com/tomka/rechnung) out there,
+There are [other known forks](https://github.com/tomka/rechnung),
 and while I am grateful for inspiration and the occasional snippet of code,
 they implement functionality that I, as a non-German do not need and no
-longer consider “simple”.
+longer consider “simple”. 
+
+Also, the created invoice table looks downright ugly. (Who needs vertical bars?)
 
 ## Known issues / Bug / Wanted Improvements
 
@@ -37,11 +39,11 @@ longer consider “simple”.
 
 ## Copyright
 
-© 1998 M.G. Berberich  
-© 2001 Ulrich Sibiller  
-© 2022 Ingmar Greil  
+© 1998, 2001 M. G. Berberich and Ulrich Sibiller  
 
 ### LaTeX Project Public License (LPPL) v1.3
+
+© 2022 Ingmar Greil
 
 This work may be distributed and/or modified under the conditions of the LaTeX
 Project Public License, either version 1.3 of this license or (at your
@@ -51,11 +53,11 @@ distributions of LaTeX version 2005/12/01 or later.
 
 ### Legacy Copyright
 
-The original licensing terms stated that "any modified versions of this file
-must be renamed with new filenames distinct from rechnung.sty" and that
+The original licensing terms stated that *any modified versions of this file
+must be renamed with new filenames distinct from rechnung.sty* and that
 distribution was allowed, as long as the files were ditributed in its
 entirety. (To cover that legal requirement, the legacy code "Original310.tgz"
-is distributed as well, though not needed.)
+is distributed as well, though not usually needed.)
 
 #### Original German License by M.G. Berberich
 
@@ -72,6 +74,6 @@ notwendigen Service, Reparatur oder Korrektur. Die Weitergabe dieses Pakets
 ist erlaubt solange es *vollständig* weitergegeben wird. 
 
 Änderungen an Dateien dieses Pakets sind nur zulässig wenn die Datei *vorher*
-umbenannt wird, mein Copyright-Vermerke und der Haftungssausschluß erhalten
-bleiben und klar ersichtlich ist, daß es sich um eine veränderte Variante
+umbenannt wird, mein Copyright-Vermerk und der Haftungssausschluss erhalten
+bleiben und klar ersichtlich ist, dass es sich um eine veränderte Variante
 handelt.
