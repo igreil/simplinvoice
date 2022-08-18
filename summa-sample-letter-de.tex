@@ -1,0 +1,177 @@
+% !TeX program  = lualatex
+% !TeX encoding = UTF-8 Unicode
+%-----------------------------------------------------------------------------
+% 									This is summa-sample-letter-de.tex
+% 									A current version can be downloaded from
+%									https://github.com/igreil/summa
+%
+% © Ingmar Greil, 2022. 			The LPPL applies. See summa.sty for details.
+%-----------------------------------------------------------------------------
+\documentclass[fontsize=11pt,parskip=full]{scrlttr2}
+	\LoadLetterOption{DIN}			% Some default values for German letters
+	\pagestyle{empty}				% Suppress page header and footer
+	\KOMAoptions{enlargefirstpage,
+				parskip=full}		% No paragraph indentation, done correctly
+%-----------------------------------------------------------------------------
+\setkomavar{fromname}		{Peter Rokurist}
+\setkomavar{fromaddress}	{Some Street 22/7, 1000 Wien}
+%-----------------------------------------------------------------------------
+\setkomavar{date}			[Datum]			{\today}
+\setkomavar{customer}		[Fälligkeit]	{\duedate}			% => #86
+\setkomavar{yourref}		[Nummer]		{\invoicenumber}	% => #91
+\setkomavar{subject}						{Rechnung Nr.~\invoicenumber}
+%-----------------------------------------------------------------------------
+\setkomavar{firsthead}{%				% FIRST LINE OF MASTHEAD
+	\begin{center}{%
+		\fontsize{38}{40}\selectfont	% Switch to font size 38pt for header
+		\color{mycolor!50}				% The chosen color, half as colorful
+			\textsc{Pizzeria}
+		\color{mycolor}					% Regular, full hue again
+			\textsc{\& Copy Shop}
+	}\\[-.35em]{%
+		\color{mycolor!75}				% Let's try ¾
+			\rule{\textwidth}{.75pt}
+	}
+	\end{center}
+%-----------------------------------------------------------------------------
+	\begin{center}						% SECOND LINE OF MASTHEAD
+		\color{mycolor}					% Separate environment, so you 
+			\vspace{-3.5em}\par			% could also flushright/-left easily
+			Some Street 22/7, 1000 Wien • www.example.com
+			 • DE02\;1001\;0010\;0006\;8201\;01		% \; = .2777em space
+	\end{center}						% Separate environment, so you 
+										% could also flushright/-left easily
+}%----------------------------------------------------------------------------
+\usepackage[ngerman]{babel}	% Your language of choice, effects a few packages
+%-----------------------------------------------------------------------------
+\usepackage[forget]{qrcode}					% QR-codes, no caching
+\usepackage[absolute]{textpos}				% Absolute positioning of QR-codes
+\usepackage{tcolorbox, xcolor, graphicx}	% Misc. graphics packages
+	\definecolor{mycolor}{rgb}{.25,.25,.9}	% See xcolor docs for more
+%-----------------------------------------------------------------------------
+\usepackage{xstring}						% For string manipulation
+\usepackage{lua-ul}							% For underlining (soul replacement)
+\usepackage{scrdate,advdate}				% For calculating the due day/date
+\usepackage{fmtcount}						% For spelling out the days
+%-----------------------------------------------------------------------------
+\usepackage{fontspec}						% I suggest a nice Sans font
+
+% Usual font options for numbers include Monospaced/Proportional 
+% and OldStyle/Lining. The latter is a matter of taste and personal 
+% preference, but I highly recommend Monospaced for tabular content like 
+% invoices. Note that not all fonts support all four combinations.
+
+	\setsansfont[Numbers={Monospaced,		Lining}]	{Noto Sans}
+	%\setsansfont[Numbers={Monospaced,		OldStyle}]	{Noto Sans}
+	
+	%\setsansfont[Numbers={Proportional,	Lining}]	{Noto Sans}
+	%\setsansfont[Numbers={Proportional,	OldStyle}]	{Noto Sans}
+
+	\defaultfontfeatures{%
+		SmallCapsFeatures = {%
+			Letters = SmallCaps,
+			Numbers = Lining,
+			LetterSpace = -.75	% tighter spacing for small caps
+		}, 
+		Ligatures = {%
+			Common, TeX, Required, %Contextual
+		},
+	}												% No serifs, no siree, Bob!
+	\renewcommand{\familydefault}{\sfdefault}		% Sans all the way
+%-----------------------------------------------------------------------------
+\usepackage{summa}					% <= This is what we're here for :)
+		\TaxRate{20}{10}			% For Austria. Default is Germany's 19/7
+									% Only natural numbers for now, please.
+\providecommand*\duedate{%			% Advance the current date by x number
+	\AdvanceDate[\payperiod]\today	% of days to arrive at the due date
+}%----------------------------------------------------------------------------
+\begin{document}	\def\payperiod		{14}	% How many days to pay?
+					\def\invoicenumber	{42}	% Reference/invoice number
+%-----------------------------------------------------------------------------	
+	\begin{letter}{%
+%
+					Ms. C. Ustomer\\
+					Over the Rainbow, Suite 200c\\
+					1234 Wien\\				
+					\vspace{.25em}\par		% Skip a bit, brother, and
+											% flush mail address to the right
+					\underLine{per E-Mail} \hfill\emph{customer@example.org}
+	}
+%-----------------------------------------------------------------------------	
+		\opening{Sehr geehrte Damen und Herren\kern 1pt !}
+
+		Die \textsc{Pizzeria \& Copy Shop GmbH} dankt sehr herzlich 
+		für Ihren Auftrag.
+
+		\begin{invoice*}[B]				% N = Netto			(Net)
+										% B = Brutto		(Gross)
+			\NumbersOff					% X = Ohne Steuer	(No Taxes)
+			\SeparatorOff
+										% The actual invoice part:
+%=============================================================================
+	%\InvoiceLine{How many}{Article number}{Description}{Unit price} 
+	% [e] is for r*E*duced tax rate (but really should be \InvoiceLine*)
+\InvoiceLine[e]{48}	{47-11}		{Urinacanis Pale Ale\tab 0,50\,ℓ}	{3,60}
+\InvoiceLine[e]{21}	{47-12}		{Koala-Kola, süß-sauer \tab 0,33\,ℓ}{2,20}
+\InvoiceLine[e]{8}	{47-99}		{Große Pizza}						{15,50}
+\InvoiceLine{250}	{08-15}		{Druck Plakate \tab A3}				{1,75}
+\InvoiceLine{2,5}	{---~~~}	{Arbeitsstunden Praktikant}			{25,50}
+%=============================================================================
+
+		\end{invoice*}
+
+	% Replace the ℓ sign (for liter) in lines 114f with "L" or "l" if you 
+	% are not a fan, or your font simply doesn't have the glyph.
+
+	% If you don't need an article number, use the un-starred environment 
+	% 	\begin{invoice} … \end{invoice}
+
+		Bitte überweisen Sie den offenen Betrag von 
+		\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
+		binnen \numberstringnum{\payperiod}~Tagen – bis \DayName{\year}{\month}%
+		{\day+\payperiod}, den \AdvanceDate[\payperiod]\today\ – 
+		auf unser Konto bei der X-Bank.
+
+		\AdvanceDate[-\payperiod]				% Restore current date
+
+\begin{textblock*}{10cm}(13.5cm,4.5cm)			% Absolutely positioned QR code
+	\begin{minipage}[c]{6,75cm}
+%		Draw a border around the QR Code, with rounded corners:
+		\begin{tcolorbox}[colback=white,grow to right by=-17mm]
+
+%	A few definitions for the payment QR-code:
+	\def\creditor	{Pizzeria Copy Shop}
+	\def\reference	{Rechnungsnr.\ \invoicenumber/\the\year}
+	\def\bic		{PBNKDEFF}				% => Postbank
+	\def\iban		{DE02100100100006820101}% valid test IBAN
+	\def\currcode	{EUR}					% probably the only sensible choice
+
+% FIXME Need to strip \Total of the € sign and feed the raw value.
+% For now we have to hardcode the amount :-(
+
+	% Both . and , are accepted decimal separators
+	% Full amounts without them are fine, too.
+	\def\amount		{1.20}							% amount in \currcode
+
+% No further comments, linebreaks, spaces, special characters etc. below. 
+% Very finicky. Do not touch!
+%=============================================================================
+\qrcode[height=4cm]{BCD\?001\?1\?SCT\?\bic\?\creditor\?\iban\?\currcode\amount\?\?\reference\?\?}
+%=============================================================================
+		\end{tcolorbox}
+	\end{minipage}
+\end{textblock*}
+
+		% Conforming to Austrian standards, safe to comment out or modify:
+		\begin{textblock*}{2cm}(18.15cm,5.75cm)%
+			\rotatebox{90}{\colorbox{white}{Zahlen mit Code}}
+		\end{textblock*}
+
+		\setkomavar{signature}{%
+					\hspace{75mm}P. Rokurist{}~p.\kern 1pt p.\kern 1pt a
+		}
+		\closing{Mit freundlichen Grüßen}
+
+	\end{letter}
+\end{document}
+% EOF

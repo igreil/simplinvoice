@@ -10,14 +10,14 @@
 %
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{summa}
-	[2022/08/15 v0.1 Summa by Ingmar Greil]
+	[2022/08/18 v0.2 Summa by Ingmar Greil]
 %
 %\RequirePackage{siunitx}			% Needed for the formatting of numbers
 \RequirePackage{tabto}				% We could probably do without …
 	\TabPositions{.75\linewidth}	% Sets a tabstop at ¾, accessible via \tab
 %
 %=============================================================================
-%		This is summa 0.1											2022-08-17
+%		This is summa 0.2											2022-08-18
 %     © Ingmar Greil, 2022.
 %=============================================================================
 %
@@ -51,7 +51,7 @@
 %-----------------------------------------------------------------------------
 \newcommand*\@sumnet		{Zwischensumme}	% Net Total, before taxes
 \newcommand*\@sumtot		{Gesamtsumme}	% Gross Total, with taxes
-\newcommand*\@excl			{\quad zzgl.}	% excl.
+\newcommand*\@excl			{\quad zzgl.~}	% excl.
 %-----------------------------------------------------------------------------
 \newcommand*\@running		{Nr.}			% Number
 \newcommand*\@amount		{Anzahl}		% Item amount
@@ -147,9 +147,9 @@
    \advance\@tempcnta1
            \multiply\@SUMAtmp10
    \@readB\relax
-         \else					% FIXME German
-           \multiply\@SUMAtmp100\PackageError{summa}{Keine
-           Nachkommastellen gefunden}
+         \else					
+           \multiply\@SUMAtmp100\PackageError{summa}{No digits after 
+           decimal point detected}
          \fi
        \fi
     \fi
@@ -163,8 +163,7 @@
   \expandafter
   \if#1\relax\relax
      \ifnum \@tempcnta > 2
-								% FIXME German
-       \@SUMAtmp0\PackageError{summa}{Mehr als zwei Nachkommastellen gefunden}
+       \@SUMAtmp0\PackageError{summa}{More than two digits after decimal point detected}
      \fi
      \ifnum \@tempcnta < 2
  \advance\@tempcnta1
@@ -205,9 +204,9 @@
 	\advance\@SUMAtaxamntii50\divide\@SUMAtaxamntii100
 	\@SUMAtaxamnt\@SUMAtaxamnti\advance\@SUMAtaxamnt\@SUMAtaxamntii
 	\if@SUMAerm
-	\@SUMAsline{\@excl~\@SUMAstsii\,\%~\@taxabrv \@taxred}{\writeCurrency\@SUMAtaxamntii}
+	\@SUMAsline{\@excl\@SUMAstsii\,\%~\@taxabrv \@taxred}{\writeCurrency\@SUMAtaxamntii}
 	\fi
-	\@SUMAsline{\@excl~\@SUMAstsi\,\%~\@taxabrv}{\writeCurrency\@SUMAtaxamnti}
+	\@SUMAsline{\@excl\@SUMAstsi\,\%~\@taxabrv}{\writeCurrency\@SUMAtaxamnti}
 	\advance\@SUMAtotal\@SUMAtaxamnt
 	\pregross
 	\@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}%
@@ -235,7 +234,7 @@
   \@SUMAsline{inkl. \@SUMAstsi\% \@taxabrv}{\writeCurrency\@SUMAtaxamnti}%
   \writefoot
 }%----------------------------------------------------------------------------
-\newcommand*{\sep}[0]{%	Next column
+\newcommand*{\sep}[0]{%					Jump to next column
 	\hskip\tabcolsep
 }%----------------------------------------------------------------------------
 \newcommand*\@SUMAlineX[6]{{

@@ -1,0 +1,188 @@
+% !TeX program  = lualatex
+% !TeX encoding = UTF-8 Unicode
+%-----------------------------------------------------------------------------
+% 									This is summa-sample-letter-en.tex
+% 									A current version can be downloaded from
+%									https://github.com/igreil/summa
+%
+% © Ingmar Greil, 2022. 			The LPPL applies. See summa.sty for details.
+%-----------------------------------------------------------------------------
+\documentclass[fontsize=11pt,parskip=full]{scrlttr2}
+	\pagestyle{empty}				% Suppress page header and footer
+	\KOMAoptions{enlargefirstpage,
+				parskip=full}		% No paragraph indentation, done correctly
+%-----------------------------------------------------------------------------
+\setkomavar{fromname}		{Nomen Nescio}
+\setkomavar{fromaddress}	{3816 Glenview Drive, Corpus Christi, TX 78479}
+%-----------------------------------------------------------------------------
+\setkomavar{date}			[Date]			{\today}
+\setkomavar{customer}		[Due]			{\duedate}			% => #86
+\setkomavar{yourref}		[Number]		{\invoicenumber{}–\the\year}
+\setkomavar{subject}						{Invoice \#\invoicenumber}
+%-----------------------------------------------------------------------------
+\setkomavar{firsthead}{%				% FIRST LINE OF MASTHEAD
+	\begin{center}{%
+		\fontsize{38}{40}\selectfont	% Switch to font size 38pt for header
+		\color{mycolor!50}				% The chosen color, half as colorful
+			\textsc{Leo's}				% => #48
+		\color{mycolor}					% Regular, full hue again
+			\textsc{Pizzas \& Stuff}
+	}\\[-.35em]{%
+		\color{mycolor!75}				% Let's try ¾
+			\rule{\textwidth}{.75pt}
+	}
+	\end{center}
+%-----------------------------------------------------------------------------
+	\begin{flushright}					% SECOND LINE OF MASTHEAD
+		\color{mycolor}
+			\vspace{-3em}\par
+			3316 Scheuvront Drive, Denver, CO 80231 • www.example.com\\
+			Proudly fulfilling your late night cravings since 1991
+	\end{flushright}
+}%----------------------------------------------------------------------------
+\usepackage[american]{babel} % Your language of choice, effects a few packages
+%-----------------------------------------------------------------------------
+\usepackage[forget]{qrcode}					% For QR-code (no caching)
+\usepackage[absolute]{textpos}				% Absolute positioning of QR-code
+\usepackage{tcolorbox, xcolor, graphicx}	% Misc. graphics packages
+	\definecolor{mycolor}{rgb}{.25,.65,.25}	% See xcolor docs for more
+%-----------------------------------------------------------------------------
+\usepackage{xstring}						% For string manipulation
+\usepackage{lua-ul}							% For underlining (soul replacement)
+\usepackage{scrdate,advdate}				% For calculating the due day/date
+\usepackage{fmtcount}						% For spelling out the days
+%-----------------------------------------------------------------------------
+\usepackage{fontspec}						% May I suggest a nice sans font?
+
+% Usual font options for numbers include Monospaced/Proportional 
+% and OldStyle/Lining. The latter is a matter of taste and personal 
+% preference, but I highly recommend Monospaced for tabular content like 
+% invoices. Note that not all fonts support all four combinations.
+
+	\setsansfont[Numbers={Monospaced,		Lining}]	{Noto Sans}
+	%\setsansfont[Numbers={Monospaced,		OldStyle}]	{Noto Sans}
+	
+	\defaultfontfeatures{%
+		SmallCapsFeatures = {%
+			Letters = SmallCaps,
+			Numbers = Lining,
+			LetterSpace = -.75	% tighter spacing for small caps
+		}, 
+		Ligatures = {%
+			Common, TeX, Required, %Contextual
+		},
+	}												% No serifs, no siree, Bob!
+	\renewcommand{\familydefault}{\sfdefault}		% Sans all the way
+%-----------------------------------------------------------------------------
+\usepackage{summa}					% <= This is what we're here for :)
+		\TaxRate{9}{0}			% For Denver, CO. Default is Germany's 19/7
+									% It's actual 8.81%, but we can't do 
+									% anything but natural numbers for now.
+
+\providecommand*\duedate{%			% Advance the current date by x number
+	\AdvanceDate[\payperiod]\today	% of days to arrive at the due date
+}%----------------------------------------------------------------------------
+\begin{document}	\def\payperiod		{14}	% How many days to pay?
+					\def\invoicenumber	{42}	% Reference/invoice number
+%-----------------------------------------------------------------------------	
+	\begin{letter}{%
+%
+					Ms. C. Ustomer\\
+					Over the Rainbow, Suite 200c\\
+					1234 Vienna, Austria\\				
+					\vspace{.25em}\par		% Skip a bit, brother, and
+											% flush mail address to the right
+					\underLine{sent by E-Mail} \hfill\emph{customer@example.org}
+	}
+%-----------------------------------------------------------------------------	
+		\opening{Dear Ms. Ustomer,}
+
+		\textsc{Leo's Pizzas \& Stuff} appreciates your business.
+
+		\begin{invoice}[N]				% N = Netto			(Net)
+										% B = Brutto		(Gross)
+			\NumbersOff					% X = Ohne Steuer	(No Taxes)
+			\SeparatorOff
+			\UseDollar
+
+% This needs to be more userfriendly:
+\makeatletter
+	\renewcommand*\@amount		{~}					% Item amount
+	\renewcommand*\@description	{Description}		% Item description
+	\renewcommand*\@unitprice	{Unit price}		% Item price
+	\renewcommand*\@totalprice	{Total price}		% Item price × amount
+	\renewcommand*\@decimalsep	{.}					% decimal separator
+
+	\renewcommand*\@taxabrv		{Combined Sales Tax}
+	\renewcommand*\@sumnet		{Subtotal}	% Net Total, before taxes
+	\renewcommand*\@sumtot		{Total}	% Gross Total, with taxes
+	\renewcommand*\@excl		{}	% excl.
+
+\makeatother
+										% The actual invoice part:
+%=============================================================================
+	%\InvoiceLine{How many}	{Description}	{Unit price} 
+	% [e] is for r*E*duced tax rate (but really should be \InvoiceLine*)
+\InvoiceLine{48}	{Urinacanis Pale Ale		\tab 16 oz.}	{2.79}
+\InvoiceLine{21}	{Koala-Kola, sweet-sour 	\tab 12 oz.}	{1.59}
+\InvoiceLine{8}		{Large Pizza}								{12.25}
+\InvoiceLine{250}	{Misc. Printing}							{1.99}
+\InvoiceLine{2.5}	{Work Hours (Intern)}						{25.00}
+%=============================================================================
+
+		\end{invoice}
+
+	% If you need an article number, use the starred environment:
+	% 	\begin{invoice*}
+	%		\InvoiceLine{How many}{Article number}{Description}{Unit price} 
+	%	\end{invoice*}
+
+
+\marginpar{\textbf{FIXME} •\;Currency •\;German •\;Decimals}
+We are looking forward to receiving the full amount of
+ \Total\ (including \TaxAmnt\ in taxes) within \numberstringnum{\payperiod}
+ days{}, i.e. on or before \DayName{\year}{\month}{\day+\payperiod},
+ \AdvanceDate[\payperiod]\today{}. 
+
+
+		\AdvanceDate[-\payperiod]				% Restore current date
+
+\begin{textblock*}{10cm}(13.5cm,4.5cm)			% Absolutely positioned QR code
+	\begin{minipage}[c]{6,75cm}
+%		Draw a border around the QR Code, with rounded corners:
+		\begin{tcolorbox}[colback=white,grow to right by=-17mm]
+
+%	A few definitions for the payment QR-code:
+	\def\creditor	{Pizzeria Copy Shop}
+	\def\reference	{Invoice\ \#\ \invoicenumber/\the\year}
+	\def\bic		{PBNKDEFF}				% => Postbank
+	\def\iban		{DE02100100100006820101}% valid test IBAN
+	\def\currcode	{USD}					% probably the only sensible choice
+
+% FIXME Need to strip \Total of the € sign and feed the raw value.
+% For now we have to hardcode the amount :-(
+
+	% Both . and , are accepted decimal separators
+	% Full amounts without them are fine, too.
+	\def\amount		{1.20}							% amount in \currcode
+
+% No further comments, linebreaks, spaces, special characters etc. below. 
+% Very finicky. Do not touch!
+%=============================================================================
+\qrcode[height=4cm]{BCD\?001\?1\?SCT\?\bic\?\creditor\?\iban\?\currcode\amount\?\?\reference\?\?}
+%=============================================================================
+		\end{tcolorbox}
+	\end{minipage}
+\end{textblock*}
+
+		% Conforming to Austrian standards, safe to comment out or modify:
+		\begin{textblock*}{2cm}(18.15cm,5.75cm)%
+			\rotatebox{90}{\colorbox{white}{Scan to Pay}}
+		\end{textblock*}
+
+\setkomavar{signature}{}	% No signature
+\closing{}					% No closing
+
+	\end{letter}
+\end{document}
+% EOF

@@ -1,4 +1,4 @@
-# summa v0.1
+# summa v0.2
 
 A simple LaTeX class for creating invoices, geared towards European users.
 
@@ -13,7 +13,7 @@ It started out as a fork of
 [_rechnung.sty_](https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
 (“Rechnung” being the German word for invoice). 
 There are [other known forks](https://github.com/tomka/rechnung),
-and while I am grateful for inspiration and the occasional snippet of code,
+and while I am grateful for inspiration and perhaps the occasional snippet of code,
 they simply implement functionality that I – as a non-German – do not need and no
 longer consider “simple”. 
 
@@ -23,6 +23,9 @@ needs vertical bars? Or most hoizontal ones, for that matter?)
 # Changelog
 
 v.01 Forked from rechnung.sty. Tidyed up some code. The basics.
+v.02 Added two sample letters. The German one can serve as a viable basis 
+for your invoice, but the English one is more proof-of-concept than 
+anything else. Both are extensively commented in English.
 
 ## Known issues / Bug / Wanted Improvements
 
@@ -37,19 +40,19 @@ v.01 Forked from rechnung.sty. Tidyed up some code. The basics.
   of starred commands.
 - An interface with babel, to choose language and/or currency (tax rates?)
   automatically
-- Documentation!
 - When using \Credit, store credit larger than the amount owed leads to errors
 - Make a starred version of \Credit that is not a running item, but deducted
   at the bottom with the taxes. Same for shipping, or other random items?
 - What about percent discounts? ("3% Repeat Customer Discount")
-- What about 0% tax items? (Fees, cash repayments etc.) \ZeroTaxItem ?
+- What about 0% tax items? (Fees, cash repayments etc.) \ZeroTaxItem? Or
+  \InvoiceLine[0] or \InvoiceLine[z] or similar …
 - Option to have $ before amount, € after: $10 <=> 10 €
 - Layout issues with single digit tax amounts (e.g. 19/7%)
-- Issues with X class: \TaxAmnt uses the last value instead of zero
-- An easy way to add a rule, or some vertical white space
-- QR Code for easy online banking (QR-Code / Giro-Code)
-- Perhaps a counter for invoice numbers, autoamtically 
+- Issues with X class: \TaxAmnt uses the last calcualted value instead of zero
+- An easy way to add a horizontal rule, or some vertical white space
+- Perhaps a counter for invoice numbers, automatically 
 incremented and writen to an external file?
+- Documentation!
 
 ## License and Disclaimer
 
