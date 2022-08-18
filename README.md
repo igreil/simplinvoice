@@ -52,6 +52,7 @@ anything else. Both are extensively commented in English.
 - An easy way to add a horizontal rule, or some vertical white space
 - Perhaps a counter for invoice numbers, automatically 
 incremented and writen to an external file?
+- PDF Metadata
 - Documentation!
 
 ## License and Disclaimer

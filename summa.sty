@@ -194,7 +194,7 @@
       \sep}%
 \vskip 1.4pt}}
 \newcommand*\@SUMAohne{
-  \@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}}
+\@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}}
 %-----------------------------------------------------------------------------
 \newcommand*\@SUMAnetto{%
 	\@SUMAsline{\@sumnet}{\writeCurrency\@SUMAtotal}\postnet%
@@ -204,7 +204,7 @@
 	\advance\@SUMAtaxamntii50\divide\@SUMAtaxamntii100
 	\@SUMAtaxamnt\@SUMAtaxamnti\advance\@SUMAtaxamnt\@SUMAtaxamntii
 	\if@SUMAerm
-	\@SUMAsline{\@excl\@SUMAstsii\,\%~\@taxabrv \@taxred}{\writeCurrency\@SUMAtaxamntii}
+	\@SUMAsline{\@excl\@SUMAstsii\,\%~\@taxabrv ~\@taxred}{\writeCurrency\@SUMAtaxamntii}
 	\fi
 	\@SUMAsline{\@excl\@SUMAstsi\,\%~\@taxabrv}{\writeCurrency\@SUMAtaxamnti}
 	\advance\@SUMAtotal\@SUMAtaxamnt
@@ -213,7 +213,8 @@
 	\writefoot
 }%----------------------------------------------------------------------------
 \newcommand*\@SUMAbrutto{
-  \@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}
+\pregross
+\@SUMAsline{\@sumtot}{\writebfCurrency\@SUMAtotal}
   \multiply\@SUMAtaxamnti\@SUMAstsi\multiply\@SUMAtaxamnti2%
   \@tempcnta100\advance\@tempcnta\@SUMAstsi
   \advance\@SUMAtaxamnti\@tempcnta
@@ -228,10 +229,12 @@
 
   \@SUMAtaxamnt\@SUMAtaxamnti\advance\@SUMAtaxamnt\@SUMAtaxamntii
   \if@SUMAerm
-    \@SUMAsline{inkl. erm. \@taxabrv \@SUMAstsii\%}
+\vskip .5ex    
+\@SUMAsline{\quad inkl. \@SUMAstsii\% \@taxabrv\ \@taxred}%XXX
     {\writeCurrency\@SUMAtaxamntii}%
   \fi
-  \@SUMAsline{inkl. \@SUMAstsi\% \@taxabrv}{\writeCurrency\@SUMAtaxamnti}%
+\vskip .5ex
+\@SUMAsline{\quad inkl. \@SUMAstsi\% \@taxabrv}{\writeCurrency\@SUMAtaxamnti}%
   \writefoot
 }%----------------------------------------------------------------------------
 \newcommand*{\sep}[0]{%					Jump to next column

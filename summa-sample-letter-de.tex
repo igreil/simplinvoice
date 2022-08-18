@@ -10,16 +10,26 @@
 \documentclass[fontsize=11pt,parskip=full]{scrlttr2}
 	\LoadLetterOption{DIN}			% Some default values for German letters
 	\pagestyle{empty}				% Suppress page header and footer
-	\KOMAoptions{enlargefirstpage,
-				parskip=full}		% No paragraph indentation, done correctly
+	\KOMAoptions{	enlargefirstpage,
+					parskip=full}	% No paragraph indentation, done correctly
 %-----------------------------------------------------------------------------
 \setkomavar{fromname}		{Pizzeria \& Copy Shop}
 \setkomavar{fromaddress}	{Im Nirgendwo 81-83, 1280 Wien}
 %-----------------------------------------------------------------------------
-\setkomavar{date}			[Datum]			{\today}
-\setkomavar{customer}		[Fälligkeit]	{\duedate}			% => #86
-\setkomavar{yourref}		[Nummer]		{\invoicenumber}	% => #91
+
 \setkomavar{subject}						{Rechnung Nr.~\invoicenumber}
+\setkomavar{invoice}		[Rechnung]		{\invoicenumber{}-\the\year}
+
+\newkomavar*{uid}				\setkomavar{uid}[UID-Nummer]{AT\,U12345678}
+\newkomavar*{due}				\setkomavar{due}[Fällig]{\duedate}
+
+\removereffields
+	\addtoreffields{invoice}
+	\addtoreffields{uid}
+	\addtoreffields{due}
+
+\setkomavar{date}			[Datum]			{\today}
+
 %-----------------------------------------------------------------------------
 \setkomavar{firsthead}{%				% FIRST LINE OF MASTHEAD
 	\begin{center}{%
@@ -37,15 +47,14 @@
 	\begin{center}						% SECOND LINE OF MASTHEAD
 		\color{mycolor}					% Separate environment, so you 
 			\vspace{-3.5em}\par			% could also flushright/-left easily
-			Im Nirgendwo 81-83, 1280 Wien • www.example.com
-			 • DE02\;1001\;0010\;0006\;8201\;01		% \; = .2777em space
+			Im Nirgendwo 81-83, 1280 Wien • www.example.com • Tel. (01) 00 00 001
 	\end{center}						% Separate environment, so you 
 										% could also flushright/-left easily
 }%----------------------------------------------------------------------------
 \usepackage[ngerman]{babel}	% Your language of choice, effects a few packages
 %-----------------------------------------------------------------------------
-\usepackage[forget]{qrcode}					% QR-codes, no caching
-\usepackage[absolute]{textpos}				% Absolute positioning of QR-codes
+\usepackage[forget]{qrcode}					% QR codes, no caching
+\usepackage[absolute]{textpos}				% Absolute positioning of QR codes
 \usepackage{tcolorbox, xcolor, graphicx}	% Misc. graphics packages
 	\definecolor{mycolor}{rgb}{.25,.25,.9}	% See xcolor docs for more
 %-----------------------------------------------------------------------------
@@ -85,14 +94,14 @@
 \providecommand*\duedate{%			% Advance the current date by x number
 	\AdvanceDate[\payperiod]\today	% of days to arrive at the due date
 }%----------------------------------------------------------------------------
-\begin{document}	\def\payperiod		{14}	% How many days to pay?
+\begin{document}	\def\payperiod		{7}		% How many days to pay?
 					\def\invoicenumber	{42}	% Reference/invoice number
 %-----------------------------------------------------------------------------	
 	\begin{letter}{%
 %
 					Ms. C. Ustomer\\
-					Over the Rainbow, Suite 200c\\
-					1234 Wien\\				
+					Over the Rainbow, Suite 221\kern 1pt B\\
+					1245 Wien\\				
 					\vspace{.25em}\par		% Skip a bit, brother, and
 											% flush mail address to the right
 					\underLine{per E-Mail} \hfill\emph{customer@example.org}
@@ -100,23 +109,36 @@
 %-----------------------------------------------------------------------------	
 		\opening{Sehr geehrte Damen und Herren\kern 1pt !}
 
-		Die \textsc{Pizzeria \& Copy Shop GmbH} dankt sehr herzlich 
+		Die \textsc{Pizzeria \& Copy Shop} GmbH dankt sehr herzlich 
 		für Ihren Auftrag.
 
-		\begin{invoice*}[B]				% N = Netto			(Net)
+		\begin{invoice*}[N]				% N = Netto			(Net)
 										% B = Brutto		(Gross)
-			\NumbersOff					% X = Ohne Steuer	(No Taxes)
+			\NumbersOn					% X = Ohne Steuer	(No Taxes)
 			\SeparatorOff
+
+			% Change "Nr." to "Pos."
+			\makeatletter\renewcommand*\@running{Pos.}\makeatother	
+
+			% Invoice table header formatting
+			\renewcommand*\headerformat{\scriptsize}	
+
 										% The actual invoice part:
 %=============================================================================
 	%\InvoiceLine{How many}{Article number}{Description}{Unit price} 
 	% [e] is for r*E*duced tax rate (but really should be \InvoiceLine*)
 \InvoiceLine[e]{48}	{47-11}		{Urinacanis Pale Ale\tab 0,50\,ℓ}	{3,60}
 \InvoiceLine[e]{21}	{47-12}		{Koala-Kola, süß-sauer \tab 0,33\,ℓ}{2,20}
+\InvoiceLine[e]{7}	{47-13}		{Koala-Kola, bitter \tab 0,33\,ℓ}	{2,20}
+\InvoiceLine[e]{3}	{47-13}		{Koala-Kola, salzig \tab 0,33\,ℓ}	{2,20}
+\InvoiceLine[e]{1}	{47-14}		{Koala-Kola, umami \tab 0,33\,ℓ}	{2,20}
 \InvoiceLine[e]{8}	{47-99}		{Große Pizza}						{15,50}
-\InvoiceLine{250}	{08-15}		{Druck Plakate \tab A3}				{1,75}
-\InvoiceLine{2,5}	{---~~~}	{Arbeitsstunden Praktikant}			{25,50}
+\InvoiceLine{150}	{08-15}		{Plakatdruck \tab A3}				{3,25}
+\InvoiceLine{2,5}	{---~~~}	{Arbeitsstunden}					{25,50}
 %=============================================================================
+
+\enlargethispage{3\baselineskip}	% No harm in squeezing a few more lines
+									% out of this page
 
 		\end{invoice*}
 
@@ -130,7 +152,7 @@
 		\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
 		binnen \numberstringnum{\payperiod}~Tagen – bis \DayName{\year}{\month}%
 		{\day+\payperiod}, den \AdvanceDate[\payperiod]\today\ – 
-		auf unser Konto bei der X-Bank.
+		auf unser Konto bei der X-Bank, IBAN AT02\;6000\;0000\;0134\;9870.
 
 		\AdvanceDate[-\payperiod]				% Restore current date
 
@@ -142,9 +164,8 @@
 %	A few definitions for the payment QR-code:
 	\def\creditor	{Pizzeria Copy Shop}
 	\def\reference	{Rechnungsnr.\ \invoicenumber/\the\year}
-	\def\bic		{PBNKDEFF}				% => Postbank
-	\def\iban		{DE02100100100006820101}% valid test IBAN
-	\def\currcode	{EUR}					% probably the only sensible choice
+	\def\bic		{OPSKATWW}				% => BAWAG PSK
+	\def\iban		{AT026000000001349870}% valid test IBAN
 
 % FIXME Need to strip \Total of the € sign and feed the raw value.
 % For now we have to hardcode the amount :-(
@@ -156,7 +177,7 @@
 % No further comments, linebreaks, spaces, special characters etc. below. 
 % Very finicky. Do not touch!
 %=============================================================================
-\qrcode[height=4cm]{BCD\?001\?1\?SCT\?\bic\?\creditor\?\iban\?\currcode\amount\?\?\reference\?\?}
+\qrcode[height=4cm]{BCD\?001\?1\?SCT\?\bic\?\creditor\?\iban\?EUR\amount\?\?\reference\?\?}
 %=============================================================================
 		\end{tcolorbox}
 	\end{minipage}
@@ -167,9 +188,7 @@
 			\rotatebox{90}{\colorbox{white}{Zahlen mit Code}}
 		\end{textblock*}
 
-		\setkomavar{signature}{%
-					\hspace{75mm}P. Rokurist{}~p.\kern 1pt p.\kern 1pt a
-		}
+		\setkomavar{signature}{P. Rokurist~p.\kern 1pt p.\kern 1pt a}
 		\closing{Mit freundlichen Grüßen}
 
 	\end{letter}

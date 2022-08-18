@@ -95,12 +95,13 @@
 					1234 Vienna, Austria\\				
 					\vspace{.25em}\par		% Skip a bit, brother, and
 											% flush mail address to the right
-					\underLine{sent by E-Mail} \hfill\emph{customer@example.org}
+					\underLine{Sent by E-Mail} \hfill\emph{customer@example.org}
 	}
 %-----------------------------------------------------------------------------	
 		\opening{Dear Ms. Ustomer,}
 
-		\textsc{Leo's Pizzas \& Stuff} appreciates your business.
+		\textsc{Leo's Pizzas \& Stuff} appreciates your business.%
+		\marginpar{\textbf{FIXME} •\;Currency •\;German •\;Decimals}	%FIXME
 
 		\begin{invoice}[N]				% N = Netto			(Net)
 										% B = Brutto		(Gross)
@@ -130,17 +131,14 @@
 \InvoiceLine{21}	{Koala-Kola, sweet-sour 	\tab 12 oz.}	{1.59}
 \InvoiceLine{8}		{Large Pizza}								{12.25}
 \InvoiceLine{250}	{Misc. Printing}							{1.99}
-\InvoiceLine{2.5}	{Work Hours (Intern)}						{25.00}
 %=============================================================================
 
 		\end{invoice}
 
 	% If you need an article number, use the starred environment:
 	%	\begin{invoice*}
-	%		\InvoiceLine{How many}{Article number}{Description}{Unit price} 
+		%		\InvoiceLine{How many}{Article number}{Description}{Unit price} 
 	%	\end{invoice*}
-
-	\marginpar{\textbf{FIXME} •\;Currency •\;German •\;Decimals}	%FIXME
 
 We are looking forward to receiving the full amount of
  \Total\ (including \TaxAmnt\ in taxes) within \numberstringnum{\payperiod}
