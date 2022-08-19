@@ -1,6 +1,6 @@
 \ProvidesFile{pizza.lco}
 %-----------------------------------------------------------------------------
-\LoadLetterOption{DIN}			% Some default values for German letters
+\LoadLetterOption{DIN}			% Some default values for German DIN letters
 %-----------------------------------------------------------------------------
 \setkomavar{fromname}		{Pizzeria \& Copy Shop}
 \setkomavar{fromaddress}	{Im Nirgendwo 81-83, 1280 Wien}
@@ -10,6 +10,8 @@
 \setkomavar{invoice}		[Rechnung]		{\invoicenumber{}-\the\year}
 \setkomavar{date}			[Datum]			{\today}
 \setkomavar{subject}						{Rechnung Nr.~\usekomavar{invoice}}
+
+% Custom order of reference fields:
 \removereffields			\addtoreffields	{invoice}
 							\addtoreffields	{uid}
 							\addtoreffields	{due}
@@ -23,7 +25,7 @@
 			\textsc{\& Copy Shop}
 	}\\[-.35em]{%
 		\color{mycolor!75}				% Let's try ¾
-			\rule{\textwidth}{.75pt}
+			\rule{\textwidth}{.75pt}	% That's one thick line …
 	}
 	\end{center}
 %-----------------------------------------------------------------------------
@@ -35,5 +37,15 @@
 			Tel. (01) 00 00 001
 	\end{center}						% Separate environment, so you 
 										% could also flushright/-left easily
+}%============================================================================
+\setkomavar{firstfoot}{
+\begin{center}
+		\vspace{-1.5em}\par
+		\color{black}
+			\rule{\textwidth}{.75pt}
+\footnotesize
+Bankverbindung: X-Bank, IBAN AT99\;0000\;0000\;0000\;0000
+• sonstige gesellschaftsrechtliche Angaben
+\end{center}
 }%----------------------------------------------------------------------------
-% EOF
+% EOF pizza.clo

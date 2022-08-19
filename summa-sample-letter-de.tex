@@ -8,17 +8,24 @@
 % © Ingmar Greil, 2022. 			The LPPL applies. See summa.sty for details.
 %-----------------------------------------------------------------------------
 \documentclass[fontsize=11pt,parskip=half]{scrlttr2}
-\input{preamble-de}					% LaTeX preamble with packages etc.
+\input{preamble-de}					% Load LaTeX preamble with packages etc.
 %-----------------------------------------------------------------------------
-\begin{document}	\def\invoicenumber	{43}	% Invoice number
-					\def\payperiod		{10}	% How many days to pay?
-					\def\daysago		{1}		% Delivery how many days ago?
-												% 0 = today, 1 = yesterday etc.
-% \servicedate overrides \daysago so you don't have to count days when you have 
-% the date already, except when empty. Must not be undefined.
-					\def\servicedate	{2022-07-15}
+% For debugging:
+%\LoadLetterOption{visualize}		\setkomafont{field}{\color{darkgray}}
+%\showfields{head, address, location, refline, foot}
+%----------------------------------------------------------------------------
+\begin{document}	\def\invoicenumber	{42}	% Invoice number
+					\def\payperiod		{14}	% How many days to pay?
+											% Delivery how many days ago?
+					\def\daysago		{2}	% 0 = today, 1 = yesterday etc.
+% \servicedate overrides \daysago (except when empty) so you don't have to 
+% count days when you  actualy know the date already. 
+% May be empty, but must not be undefined:
+
+					\def\servicedate	{}
 %-----------------------------------------------------------------------------	
 	\LoadLetterOption{pizza}		% Load pizza.lco with letter definitions
+	
 	\begin{letter}{%
 						Ms. C. Ustomer\\
 						Over the Rainbow, Suite 221\kern 1pt B\\
@@ -26,7 +33,11 @@
 						\underLine{per E-Mail}\hfill\emph{customer@example.org}
 	}
 %-----------------------------------------------------------------------------	
-		\opening{\vspace{-2.5ex} Sehr geehrte Damen und Herren\kern 1pt !}
+		% Need more space? Feel like violating DIN 5008? 
+		% Be my guest, you handsome rebel:
+		%\opening{\vspace{-2.5ex} Sehr geehrte Damen und Herren\kern 1pt !}
+
+		\opening{Sehr geehrte Damen und Herren\kern 1pt !}
 
 		Die \textsc{Pizzeria \& Copy Shop} GmbH dankt für Ihr Vertrauen.
 		Für die am \printservicedate\ erbrachten Leistungen legen wir folgende Rechnung:
@@ -46,8 +57,8 @@
 %=============================================================================
 	%\InvoiceLine{How many}{Article number}{Description}{Unit price} 
 	% [e] is for r*E*duced tax rate (but really should be \InvoiceLine*)
-\InvoiceLine[e]{36}	{47-11}		{Urinacanis Pale Ale\tab 0,50\,ℓ}	{3,60}
-\InvoiceLine[e]{21}	{47-12}		{Koala-Kola, süß-sauer \tab 0,33\,ℓ}{2,20}
+\InvoiceLine[e]{36}	{47-07}		{Urinacanis Import Pale Ale\tab 0,50\,ℓ}{3,60}
+\InvoiceLine[e]{16}	{47-12}		{Koala-Kola, süß-sauer \tab 0,33\,ℓ}{2,20}
 \InvoiceLine[e]{5}	{47-13}		{Koala-Kola, bitter \tab 0,33\,ℓ}	{2,20}
 \InvoiceLine[e]{2}	{47-13}		{Koala-Kola, salzig \tab 0,33\,ℓ}	{2,20}
 \InvoiceLine[e]{1}	{47-14}		{Koala-Kola, umami \tab 0,33\,ℓ}	{2,20}
@@ -55,7 +66,7 @@
 \InvoiceLine{100}	{08-15}		{Plakatdruck \tab A3}				{3,25}
 \InvoiceLine{2,5}	{---~~~}	{Arbeitsstunden}					{25,50}
 %=============================================================================
-\enlargethispage{3\baselineskip}	% No harm in squeezing a few more lines
+\enlargethispage{4\baselineskip}	% No harm in squeezing a few more lines
 									% out of this page by default
 		\end{invoice*}
 
@@ -67,16 +78,18 @@
 
 		Bitte überweisen Sie den offenen Betrag von 
 		\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
-		binnen \numberstringnum{\payperiod}~Tagen – bis \DayName{\year}{\month}%
-		{\day+\payperiod}, den \duedate\ – 
-		auf unser Konto bei der X-Bank, IBAN AT02\;6000\;0000\;0134\;9870.
+		binnen \numberstringnum{\payperiod}~Tagen, d.\kern 1pt h. bis \DayName{\year}{\month}{\day+\payperiod}, den \duedate , auf unser Konto.
 
 		\AdvanceDate[-\payperiod]				% Restore current date
 
 % QR code with payment info, for SEPA payments only. 
 % Needs info setup in qrcode.tex.
 
-\input{qrcode-de}
+\input{qrcode-de}							% TEMPORARY WORKAROUND:
+\def\amount				{12}				% see qrcode-de.tex for details
+
+% Signature flushleft
+\renewcommand*{\raggedsignature}{\raggedright}
 
 		\setkomavar{signature}{P. Rokurist~ppa.}
 		\closing{Mit freundlichen Grüßen}

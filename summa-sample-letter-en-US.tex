@@ -146,8 +146,13 @@ We are looking forward to receiving the full amount of
  \AdvanceDate[\payperiod]\today{}. 
 
 		\AdvanceDate[-\payperiod]				% Restore current date
+		\enlargethispage{4\baselineskip}
 
-\setkomavar{signature}{}	% No signature
+\setkomavar{signature}{%
+	\\[-3\baselineskip]
+	\includegraphics[width=4cm]{signature}
+}
+
 \closing{}					% No closing
 
 	\end{letter}

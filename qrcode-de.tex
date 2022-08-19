@@ -1,20 +1,24 @@
-\begin{textblock*}{10cm}(13.5cm,4.5cm)			% Absolutely positioned QR code
+%-----------------------------------------------------------------------------
+\begin{textblock*}{10cm}(13.5cm,4.5cm)		% Absolutely positioned QR code
 	\begin{minipage}[c]{6,75cm}
 %		Draw a border around the QR code, with rounded corners:
 		\begin{tcolorbox}[colback=white,grow to right by=-17mm]
 
 %	A few definitions for the payment QR code:
+%-----------------------------------------------------------------------------
 	\def\creditor	{Pizzeria Copy Shop}
 	\def\reference	{Rechnungsnr.\ \invoicenumber/\the\year}
 	\def\bic		{OPSKATWW}				% BAWAG PSK
 	\def\iban		{AT026000000001349870}	% Valid test IBAN
+%-----------------------------------------------------------------------------
 
 % FIXME Need to strip \Total of the € sign and feed the raw value.
 % For now we have to hardcode the amount :-(
+% Value in summa-sample-letter-de.tex takes precedence.
 
 	% Both . and , are accepted decimal separators
 	% Full amounts without them are fine, too.
-	\def\amount		{1.20}							% amount in \currcode
+	\def\amount		{1.20}							% amount in EUR
 
 % No further comments, linebreaks, spaces, special characters etc. below. 
 % Very finicky. Do not touch!
@@ -28,4 +32,7 @@
 		% Conforming to Austrian standards, safe to comment out or modify:
 		\begin{textblock*}{2cm}(18.15cm,5.75cm)%
 			\rotatebox{90}{\colorbox{white}{Zahlen mit Code}}
+			%\rotatebox{90}{\colorbox{white}{Scan to Pay}}
 		\end{textblock*}
+%-----------------------------------------------------------------------------
+% EOF qrcode-de.tex
