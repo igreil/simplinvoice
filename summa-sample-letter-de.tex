@@ -10,22 +10,19 @@
 \documentclass[fontsize=11pt,parskip=half]{scrlttr2}
 \input{preamble-de}					% Load LaTeX preamble with packages etc.
 %-----------------------------------------------------------------------------
-% For debugging:
+% For debugging purposes:
 %\LoadLetterOption{visualize}		\setkomafont{field}{\color{darkgray}}
 %\showfields{head, address, location, refline, foot}
 %----------------------------------------------------------------------------
 \begin{document}	\def\invoicenumber	{42}	% Invoice number
 					\def\payperiod		{14}	% How many days to pay?
-											% Delivery how many days ago?
-					\def\daysago		{2}	% 0 = today, 1 = yesterday etc.
+												% Delivery how many days ago?
+					\def\daysago		{1}		% 0 = today, 1 = yesterday etc.
 % \servicedate overrides \daysago (except when empty) so you don't have to 
-% count days when you  actualy know the date already. 
-% May be empty, but must not be undefined:
-
-					\def\servicedate	{}
+% count days when you  know the actual date. May be empty, but must not …
+					\def\servicedate	{}		% … be undefined
 %-----------------------------------------------------------------------------	
 	\LoadLetterOption{pizza}		% Load pizza.lco with letter definitions
-	
 	\begin{letter}{%
 						Ms. C. Ustomer\\
 						Over the Rainbow, Suite 221\kern 1pt B\\
