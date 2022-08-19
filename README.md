@@ -1,13 +1,14 @@
 # summa v0.2
 
-A simple LaTeX class for creating invoices, geared towards European users.
+A simple LaTeXclass for creating **invoices**, geared towards European
+(EU) users.
 
 ## Introduction and History
 
-The class strives to be a simple class to meet my simple needs: to create
+Summa strives to be a simple class to meet my simple needs: to create
 simple invoices, optionally showing taxes, and caluclating everything
-automatically. Importantly, it can handle regular and reduced tax rates in
-the same invoice, which many (most) other [classes I found on CTAN](https://ctan.org/topic/invoice) can not.
+automatically. Importantly, it can handle **regular and reduced tax rates in
+the same invoice**, which many (most) other [classes I found on CTAN](https://ctan.org/topic/invoice) can not.
 
 It started out as a fork of 
 [_rechnung.sty_](https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html)
@@ -15,17 +16,17 @@ It started out as a fork of
 There are [other known forks](https://github.com/tomka/rechnung),
 and while I am grateful for inspiration and perhaps the occasional snippet of code,
 they simply implement functionality that I – as a non-German – do not need and no
-longer consider “simple”. 
+longer consider “simple”.
 
 Also, the created invoice tables look downright ugly. (Seriously, who 
 needs vertical bars? Or most hoizontal ones, for that matter?)
 
 # Changelog
 
-v.01 Forked from rechnung.sty. Tidyed up some code. The basics.
-v.02 Added two sample letters. The German one can serve as a viable basis 
-for your invoice, but the English one is more proof-of-concept than 
-anything else. Both are extensively commented in English.
+v.01 Forked from rechnung.sty. Tidyed up some code. The basics.  
+v.02 Added two sample letters. The German one can already serve as a viable
+basis for your invoice, but the English one is more proof-of-concept than
+anything else. All letters are extensively commented in English.
 
 ## Known issues / Bug / Wanted Improvements
 
@@ -43,7 +44,7 @@ anything else. Both are extensively commented in English.
 - When using \Credit, store credit larger than the amount owed leads to errors
 - Make a starred version of \Credit that is not a running item, but deducted
   at the bottom with the taxes. Same for shipping, or other random items?
-- What about percent discounts? ("3% Repeat Customer Discount")
+- What about percent discounts? ("3% Loyal Customer Discount")
 - What about 0% tax items? (Fees, cash repayments etc.) \ZeroTaxItem? Or
   \InvoiceLine[0] or \InvoiceLine[z] or similar …
 - Option to have $ before amount, € after: $10 <=> 10 €
