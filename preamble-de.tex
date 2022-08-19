@@ -1,0 +1,49 @@
+%-----------------------------------------------------------------------------
+\pagestyle{empty}					% Suppress page header and footer
+	\KOMAoptions{	enlargefirstpage,
+					parskip=full}	% No paragraph indentation, done correctly
+
+\usepackage[ngerman]{babel}	% Your language of choice, effects a few packages
+%-----------------------------------------------------------------------------
+\usepackage[forget]{qrcode}					% QR codes, no caching
+\usepackage[absolute]{textpos}				% Absolute positioning of QR codes
+\usepackage{tcolorbox, xcolor, graphicx}	% Misc. graphics packages
+	\definecolor{mycolor}{rgb}{.25,.25,.9}	% See xcolor docs for more
+%-----------------------------------------------------------------------------
+\usepackage{xstring}						% For string manipulation
+\usepackage{lua-ul}							% For underlining (soul replacement)
+\usepackage{scrdate,advdate}				% For calculating the due day/date
+\usepackage{fmtcount}						% For spelling out the days
+%-----------------------------------------------------------------------------
+\usepackage{fontspec}						% I suggest a nice Sans font
+
+% Usual font options for numbers include Monospaced/Proportional 
+% and OldStyle/Lining. The latter is a matter of taste and personal 
+% preference, but I highly recommend Monospaced for tabular content like 
+% invoices. Note that not all fonts support all four combinations.
+
+	\setsansfont[Numbers={Monospaced,		Lining}]	{Noto Sans}
+	%\setsansfont[Numbers={Monospaced,		OldStyle}]	{Noto Sans}
+	
+	\defaultfontfeatures{%
+		SmallCapsFeatures = {%
+			Letters = SmallCaps,
+			Numbers = Lining,
+			LetterSpace = -.75	% Tighter spacing for small caps
+		}, 
+		Ligatures = {%
+			Common, TeX, Required, Contextual
+		},
+	}												% No serifs, no siree, Bob!
+	\renewcommand{\familydefault}{\sfdefault}		% Sans all the way
+%-----------------------------------------------------------------------------
+\usepackage{summa}					% <= This is what we're here for :)
+		\TaxRate{20}{10}			% For Austria. Default is Germany's 19/7
+									% Only natural numbers for now, please.
+\providecommand*\duedate{%			% Advance the current date by x number
+	\AdvanceDate[\payperiod]\today	% of days to arrive at the due date
+}%----------------------------------------------------------------------------
+\providecommand*\printservicedate{%
+	\ifx\servicedate\empty\AdvanceDate[-\daysago]\today
+	\else\servicedate\fi
+}%----------------------------------------------------------------------------

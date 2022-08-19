@@ -1,0 +1,39 @@
+\ProvidesFile{pizza.lco}
+%-----------------------------------------------------------------------------
+\LoadLetterOption{DIN}			% Some default values for German letters
+%-----------------------------------------------------------------------------
+\setkomavar{fromname}		{Pizzeria \& Copy Shop}
+\setkomavar{fromaddress}	{Im Nirgendwo 81-83, 1280 Wien}
+%-----------------------------------------------------------------------------
+\newkomavar*{uid}			\setkomavar{uid}[UID-Nummer]{AT\,U12345678}
+\newkomavar*{due}			\setkomavar{due}[Fällig]{\duedate}
+\setkomavar{invoice}		[Rechnung]		{\invoicenumber{}-\the\year}
+\setkomavar{date}			[Datum]			{\today}
+\setkomavar{subject}						{Rechnung Nr.~\usekomavar{invoice}}
+\removereffields			\addtoreffields	{invoice}
+							\addtoreffields	{uid}
+							\addtoreffields	{due}
+%-----------------------------------------------------------------------------
+\setkomavar{firsthead}{%				% FIRST LINE OF MASTHEAD
+	\begin{center}{%
+		\fontsize{38}{40}\selectfont	% Switch to font size 38pt for header
+		\color{mycolor!66}				% The chosen color a third less colorful
+			\textsc{Pizzeria}
+		\color{mycolor}					% Regular, full hue again
+			\textsc{\& Copy Shop}
+	}\\[-.35em]{%
+		\color{mycolor!75}				% Let's try ¾
+			\rule{\textwidth}{.75pt}
+	}
+	\end{center}
+%-----------------------------------------------------------------------------
+	\begin{center}						% SECOND LINE OF MASTHEAD
+		\color{mycolor}					% Separate environment, so you 
+			\vspace{-3.5em}\par			% could also flushright/-left easily
+			Im Nirgendwo 81-83, 1280 Wien • 
+			www.example.com • 
+			Tel. (01) 00 00 001
+	\end{center}						% Separate environment, so you 
+										% could also flushright/-left easily
+}%----------------------------------------------------------------------------
+% EOF
