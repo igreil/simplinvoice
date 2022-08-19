@@ -8,7 +8,7 @@
 % © Ingmar Greil, 2022. 			The LPPL applies. See summa.sty for details.
 %-----------------------------------------------------------------------------
 \documentclass[fontsize=11pt,parskip=half]{scrlttr2}
-\input{preamble-de}					% Load LaTeX preamble with packages etc.
+\input{includes/preamble-de}		% Load LaTeX preamble with packages etc.
 %-----------------------------------------------------------------------------
 % For debugging purposes:
 %\LoadLetterOption{visualize}		\setkomafont{field}{\color{darkgray}}
@@ -22,7 +22,7 @@
 % count days when you  know the actual date. May be empty, but must not …
 					\def\servicedate	{}		% … be undefined
 %-----------------------------------------------------------------------------	
-	\LoadLetterOption{pizza}		% Load pizza.lco with letter definitions
+	\LoadLetterOption{includes/pizza} % Load pizza.lco with letter definitions
 	\begin{letter}{%
 						Ms. C. Ustomer\\
 						Over the Rainbow, Suite 221\kern 1pt B\\
@@ -82,7 +82,7 @@
 % QR code with payment info, for SEPA payments only. 
 % Needs info setup in qrcode.tex.
 
-\input{qrcode-de}							% TEMPORARY WORKAROUND:
+\input{includes/qrcode-de}					% TEMPORARY WORKAROUND:
 \def\amount				{12}				% see qrcode-de.tex for details
 
 % Signature flushleft
