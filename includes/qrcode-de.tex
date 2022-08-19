@@ -6,10 +6,8 @@
 
 %	A few definitions for the payment QR code:
 %-----------------------------------------------------------------------------
-	\def\creditor	{Pizzeria Copy Shop}
-	\def\reference	{Rechnungsnr.\ \invoicenumber/\the\year}
-	\def\bic		{OPSKATWW}				% BAWAG PSK
-	\def\iban		{AT026000000001349870}	% Valid test IBAN
+	\def\creditor			{Pizzeria Copy Shop}
+	\def\iban				{AT611904300234573201}	% Valid test IBAN
 %-----------------------------------------------------------------------------
 
 % FIXME Need to strip \Total of the € sign and feed the raw value.
@@ -18,21 +16,34 @@
 
 	% Both . and , are accepted decimal separators
 	% Full amounts without them are fine, too.
-	\def\amount		{1.20}							% amount in EUR
+	\def\amount			{1.20}						% Amount in EUR
+	\def\description	{Rechnungsnr.\ \invoicenumber/\the\year}
 
 % No further comments, linebreaks, spaces, special characters etc. below. 
 % Very finicky. Do not touch!
 %=================================⚠=========================================
-\qrcode[height=4cm]{BCD\?001\?1\?SCT\?\bic\?\creditor\?\iban\?EUR\amount\?\?\reference\?\?}
+\qrcode[height=4cm]{BCD\?002\?1\?SCT\?\?\creditor\?\iban\?EUR\amount\?\?\?\description\?}
 %=============================================================================
 		\end{tcolorbox}
 	\end{minipage}
 \end{textblock*}
 
-		% Conforming to Austrian standards, safe to comment out or modify:
-		\begin{textblock*}{2cm}(18.15cm,5.75cm)%
-			\rotatebox{90}{\colorbox{white}{Zahlen mit Code}}
-			%\rotatebox{90}{\colorbox{white}{Scan to Pay}}
+% Switzerland, please roll your own: https://ctan.org/pkg/qrbill
+% For Germany this might work nicely:
+
+		% \begin{textblock*}{2cm}(15cm,4.25cm){%
+		% 		\colorbox{white}{\color{darkgray}{\textbf{GiroCode}}}
+		% }
+		% \end{textblock*}
+
+% Conforming to Austrian standards, safe to comment out or modify:
+
+		\begin{textblock*}{2cm}(18.15cm,5.75cm){%
+			\rotatebox{90}{%
+				\colorbox{white}{Zahlen mit Code}
+			}
+		}
 		\end{textblock*}
+
 %-----------------------------------------------------------------------------
 % EOF qrcode-de.tex

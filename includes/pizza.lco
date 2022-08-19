@@ -45,7 +45,9 @@
 			\rule{\textwidth}{.75pt}
 \footnotesize
 Bankverbindung: X-Bank, IBAN AT99\;0000\;0000\;0000\;0000
-• sonstige gesellschaftsrechtliche Angaben
+• sonstige gesellschaftsrechtliche Angaben\\
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+sed diam nonumy eirmod tempor invidunt ut labore
 \end{center}
 }%----------------------------------------------------------------------------
 % EOF pizza.clo

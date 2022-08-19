@@ -17,9 +17,9 @@
 \begin{document}	\def\invoicenumber	{42}	% Invoice number
 					\def\payperiod		{14}	% How many days to pay?
 												% Delivery how many days ago?
-					\def\daysago		{1}		% 0 = today, 1 = yesterday etc.
+					\def\daysago		{2}		% 0 = today, 1 = yesterday etc.
 % \servicedate overrides \daysago (except when empty) so you don't have to 
-% count days when you  know the actual date. May be empty, but must not …
+% count days when you know the actual date. May be empty, but must not …
 					\def\servicedate	{}		% … be undefined
 %-----------------------------------------------------------------------------	
 	\LoadLetterOption{includes/pizza} % Load pizza.lco with letter definitions
@@ -75,7 +75,7 @@
 
 		Bitte überweisen Sie den offenen Betrag von 
 		\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
-		binnen \numberstringnum{\payperiod}~Tagen, d.\kern 1pt h. bis \DayName{\year}{\month}{\day+\payperiod}, den \duedate , auf unser Konto.
+		binnen \numberstringnum{\payperiod}~Tagen, d.\kern 1pt h. bis \DayName{\year}{\month}{\day+\payperiod}, den \duedate , auf unser \rlap{Konto.}
 
 		\AdvanceDate[-\payperiod]				% Restore current date
 
