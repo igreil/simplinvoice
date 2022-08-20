@@ -28,12 +28,9 @@ v.02 Added two sample letters. The German one can already serve as a viable
 basis for your invoice, but the English one is more proof-of-concept than
 anything else. All letters are extensively commented in English.
 
-## Known issues / Bug / Wanted Improvements
+## Known issues / Bugs / Wanted improvements / Random thoughts
 
 - Remove last traces of German functions, variable names, comments etc.
-- We need a configurable thousand separator, as in 100.000 vs. 100 000
-  (There is code out there, just need to implement it. Inital attempt with
-  siunitx have not been entirely sucessfull.)
 - Only natural numbers are accepted as tax rates for now (i.e., 10, 16, 21
   etc. percent – France for one uses reduced rates of 5.5 and 2.1 percent for
   some goods or services. Similarly, Switzerland.
@@ -49,12 +46,14 @@ anything else. All letters are extensively commented in English.
   \InvoiceLine[0] or \InvoiceLine[z] or similar …
 - Option to have $ before amount, € after: $10 <=> 10 €
 - Layout issues with single digit tax amounts (e.g. 19/7%)
+- QR code needs to get values automatically, instead of having to hardcode them
 - Issues with X class: \TaxAmnt uses the last calcualted value instead of zero
-- An easy way to add a horizontal rule, or some vertical white space
+- An easy way to add a horizontal rule, or some vertical white space?
 - Perhaps a counter for invoice numbers, automatically 
 incremented and writen to an external file?
 - PDF Metadata
 - Documentation!
+
 
 ## License and Disclaimer
 
