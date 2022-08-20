@@ -16,19 +16,21 @@
 
 	% Both . and , are accepted decimal separators
 	% Full amounts without them are fine, too.
-	\def\amount			{1.20}						% Amount in EUR
+	% \def\amount			{1}					% Amount in EUR
 	\def\description	{Rechnungsnr.\ \invoicenumber/\the\year}
 
 % No further comments, linebreaks, spaces, special characters etc. below. 
 % Very finicky. Do not touch!
 %=================================⚠=========================================
-\qrcode[height=4cm]{BCD\?002\?1\?SCT\?\?\creditor\?\iban\?EUR\amount\?\?\?\description\?}
+{\def\par{\relax\ifhmode\unskip\fi\space\ignorespaces} 
+\qrcode[height=4cm]{BCD\?002\?1\?SCT\?\?\creditor\?\iban\?EUR\amount\?\?\?\description\?}}
 %=============================================================================
 		\end{tcolorbox}
 	\end{minipage}
 \end{textblock*}
 
-% Switzerland, please roll your own: https://ctan.org/pkg/qrbill
+% Switzerland, you're on your own: https://ctan.org/pkg/qrbill
+
 % For Germany this might work nicely:
 
 		% \begin{textblock*}{2cm}(15cm,4.25cm){%
@@ -38,9 +40,10 @@
 
 % Conforming to Austrian standards, safe to comment out or modify:
 
-		\begin{textblock*}{2cm}(18.15cm,5.75cm){%
+		\begin{textblock*}{2cm}(18.15cm,5.125cm){%
 			\rotatebox{90}{%
 				\colorbox{white}{Zahlen mit Code}
+				%\colorbox{white}{www.scan2pay.info}
 			}
 		}
 		\end{textblock*}

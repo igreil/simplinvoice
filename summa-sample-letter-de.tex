@@ -9,12 +9,28 @@
 %-----------------------------------------------------------------------------
 \documentclass[fontsize=11pt,parskip=half]{scrlttr2}
 \input{includes/preamble-de}		% Load LaTeX preamble with packages etc.
+\usepackage{xstring}
 %-----------------------------------------------------------------------------
 % For debugging purposes:
 %\LoadLetterOption{visualize}		\setkomafont{field}{\color{darkgray}}
 %\showfields{head, address, location, refline, foot}
 %----------------------------------------------------------------------------
-\begin{document}	\def\invoicenumber	{42}	% Invoice number
+
+\IfFileExists{counter.num}{% 	If invoice number counter exists …
+	\newread	\myFile
+	\openin		\myFile = counter.num
+	\read\myFile to \myfoo	%	… assign its value to \invoicenumber
+
+% TODO  increment counter, write out to counter.num and close file handle.
+
+\def\invoicenumber{\myfoo}
+
+% right-side gobbling needed
+
+}{\def\invoicenumber{0}}					% Otherwise, set to zero.
+
+\begin{document}	
+%					\def\invoicenumber	{42}	% Override invoice number?
 					\def\payperiod		{14}	% How many days to pay?
 												% Delivery how many days ago?
 					\def\daysago		{2}		% 0 = today, 1 = yesterday etc.
@@ -54,14 +70,14 @@
 %=============================================================================
 	%\InvoiceLine{How many}{Article number}{Description}{Unit price} 
 	% [e] is for r*E*duced tax rate (but really should be \InvoiceLine*)
-\InvoiceLine[e]{36}	{47-07}		{Urinacanis Import Pale Ale\tab 0,50\,ℓ}{3,60}
-\InvoiceLine[e]{16}	{47-12}		{Koala-Kola, süß-sauer \tab 0,33\,ℓ}{2,20}
-\InvoiceLine[e]{5}	{47-13}		{Koala-Kola, bitter \tab 0,33\,ℓ}	{2,20}
-\InvoiceLine[e]{2}	{47-13}		{Koala-Kola, salzig \tab 0,33\,ℓ}	{2,20}
-\InvoiceLine[e]{1}	{47-14}		{Koala-Kola, umami \tab 0,33\,ℓ}	{2,20}
+\InvoiceLine[e]{240}{47-07}		{Urinacanis Pale Ale\tab 500\,mℓ}{3,60}
+\InvoiceLine[e]{16}	{47-12}		{Koala-Kola, sauer \tab 330\,mℓ}{2,20}
+\InvoiceLine[e]{5}	{47-13}		{Koala-Kola, bitter \tab 330\,mℓ}	{2,20}
+\InvoiceLine[e]{2}	{47-13}		{Koala-Kola, salzig \tab 330\,mℓ}	{2,20}
+\InvoiceLine[e]{1}	{47-14}		{Koala-Kola, umami \tab 330\,mℓ}	{2,20}
 \InvoiceLine[e]{12}	{47-99}		{Große Pizza}						{15,50}
-\InvoiceLine{100}	{08-15}		{Plakatdruck \tab A3}				{3,25}
-\InvoiceLine{2,5}	{---~~~}	{Arbeitsstunden}					{25,50}
+\InvoiceLine[e]{12}	{47-98}		{Kleine Pizza}						{14,90}
+\InvoiceLine{2}	{---~~~}		{Servicegebühr (Geldwäsche)}		{990,90}
 %=============================================================================
 \enlargethispage{4\baselineskip}	% No harm in squeezing a few more lines
 									% out of this page by default
@@ -73,20 +89,27 @@
 	% If you don't need an article number, use the un-starred environment 
 	%	\begin{invoice} … \end{invoice}
 
-		Bitte überweisen Sie den offenen Betrag von 
-		\Total\ (darin enthalten \TaxAmnt ~\TaxAbrv) 
-		binnen \numberstringnum{\payperiod}~Tagen, d.\kern 1pt h. bis \DayName{\year}{\month}{\day+\payperiod}, den \duedate , auf unser \rlap{Konto.}
+% Temporarily redefine \par to remove from \Total and \TaxAmnt:
+{\def\par{\relax\ifhmode\unskip\fi\space\ignorespaces} 
+
+		Bitte überweisen Sie den offenen Betrag von\Total\ (darin enthalten\TaxAmnt ~\TaxAbrv) binnen \numberstringnum{\payperiod}~Tagen, d.\kern 1pt h. bis \DayName{\year}{\month}{\day+\payperiod}, den \duedate , auf unser \rlap{Konto.}
 
 		\AdvanceDate[-\payperiod]				% Restore current date
+
+}	% End of temorary redefinition scope
+\def\amount					{3787,92}		% See qrcode-de.tex for details
+
+\input{includes/qrcode-de}					% TEMPORARY WORKAROUND:
 
 % QR code with payment info, for SEPA payments only. 
 % Needs info setup in qrcode.tex.
 
-\input{includes/qrcode-de}					% TEMPORARY WORKAROUND:
-\def\amount				{12}				% see qrcode-de.tex for details
 
 % Signature flushleft
 \renewcommand*{\raggedsignature}{\raggedright}
+
+
+
 
 		\setkomavar{signature}{P. Rokurist~ppa.}
 		\closing{Mit freundlichen Grüßen}

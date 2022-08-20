@@ -12,9 +12,18 @@
 \ProvidesPackage{summa}
 	[2022/08/18 v0.2 Summa by Ingmar Greil]
 %
-%\RequirePackage{siunitx}			% Needed for the formatting of numbers
+\RequirePackage{siunitx}			% Needed for the formatting of numbers
+	\sisetup{%
+				detect-all,
+				locale=DE,
+				group-separator={\kern .333pt .\kern .333pt},
+				group-digits=integer,
+				group-minimum-digits=4,
+				input-ignore={.}
+	}
+
 \RequirePackage{tabto}				% We could probably do without …
-	\TabPositions{.75\linewidth}	% Sets a tabstop at ¾, accessible via \tab
+	\TabPositions{.7\linewidth}		% Sets a tabstop, accessible via \tab
 %
 %=============================================================================
 %		This is summa 0.2											2022-08-18
@@ -72,10 +81,10 @@
 \newif\if@SUMAfirst			\newif\if@SUMAhor		\newif\if@SUMAinit
 %-----------------------------------------------------------------------------
 \@SUMAPosWidth		=		1em%			Nr.
-\@SUMAAmtWidth		=		2em%			Amount
+\@SUMAAmtWidth		=		2.25em%			Amount
 \@SUMAArtNumWidth	=		2.25em%			Article Number
-\@SUMASingleWidth	=		3.5em%			Price Per Unit
-\@SUMATotalWidth	=		4.25em%			Total Price
+\@SUMASingleWidth	=		5.5em%			Price Per Unit
+\@SUMATotalWidth	=		5.5em%			Total Price
 %-----------------------------------------------------------------------------
 \newcommand*\postnet		{\vskip .5ex}	%	Formatting After Net Total
 \newcommand*\pregross		{\vskip .5ex}	%	Formatting Before Gross Total
@@ -91,25 +100,34 @@
 \newcommand*\UseEuro	{\def\@currency{€}}%		Shortcuts for EUR 
 \newcommand*\UseDollar	{\def\@currency{\$}}%		and USD symbols
 %-----------------------------------------------------------------------------
-\newcommand*\NumbersOn[0]		{\if@SUMAinit\else\global\@SUMApostrue\fi}
-\newcommand*\NumbersOff[0]		{\if@SUMAinit\else\global\@SUMAposfalse\fi}
+\newcommand*\NumbersOn		[0]	{\if@SUMAinit\else\global\@SUMApostrue\fi}
+\newcommand*\NumbersOff		[0]	{\if@SUMAinit\else\global\@SUMAposfalse\fi}
 %-----------------------------------------------------------------------------
-\newcommand*\SeparatorOn[0]		{\if@SUMAinit\else\global\@SUMAhortrue\fi}
-\newcommand*\SeparatorOff[0]	{\if@SUMAinit\else\global\@SUMAhorfalse\fi}
+\newcommand*\SeparatorOn	[0]	{\if@SUMAinit\else\global\@SUMAhortrue\fi}
+\newcommand*\SeparatorOff	[0]	{\if@SUMAinit\else\global\@SUMAhorfalse\fi}
 %-----------------------------------------------------------------------------
-\newcommand*\Total				{\writeCurrency\@SUMAtotal}
-\newcommand*\TaxAmnt			{\writeCurrency\@SUMAtaxamnt}
+\newcommand*\TotalRaw			{\@SUMAwrite	{\@SUMAtotal}}
+\newcommand*\Total				{\TotalRaw		\,\@currency}
+
+\newcommand*\TaxAmntRaw			{\@SUMAwrite	{\@SUMAtaxamnt}}
+\newcommand*\TaxAmnt			{\TaxAmntRaw	\,\@currency}
+
 \newcommand*\TaxName			{\@taxname}
 \newcommand*\TaxAbrv			{\@taxabrv}
 %-----------------------------------------------------------------------------
-\newcommand*\@SUMAwrite[1]{%
-	\@tempcnta\the#1
-	\@tempcntb\@tempcnta
-	\divide\@tempcnta100 \the\@tempcnta\@decimalsep%
-	\multiply\@tempcnta100\advance\@tempcntb-\@tempcnta
-	\@tempcnta\@tempcntb\divide\@tempcnta10 \the\@tempcnta
-	\multiply\@tempcnta10\advance\@tempcntb-\@tempcnta
-	\the\@tempcntb
+
+\newcommand*\@SUMAwrite[1]{
+  \@tempcnta=#1
+  \@tempcntb\@tempcnta
+ 
+ \divide\@tempcnta100 \expandafter\num\expandafter{\the\@tempcnta}\@decimalsep%
+  \multiply\@tempcnta100\advance\@tempcntb-\@tempcnta
+  \ifnum#1<0
+    \multiply\@tempcntb-1
+  \fi
+  \@tempcnta\@tempcntb\divide\@tempcnta10 \the\@tempcnta
+  \multiply\@tempcnta10\advance\@tempcntb-\@tempcnta
+  \the\@tempcntb
 }%----------------------------------------------------------------------------
 \newcommand*\writeCurrency[1]{%
 	\@SUMAwrite{#1}\,\@currency
@@ -392,7 +410,7 @@
   \else\PackageError{summa}{Unbekannter Rechnungstyp `\@SUMAtype'}%
   \fi\fi\fi
   \global\@SUMAtotal\@SUMAtotal\global\@SUMAtaxamnt\@SUMAtaxamnt
-  \vskip\belowdisplayskip
+  %\vskip\belowdisplayskip
 }
 \endinput
 

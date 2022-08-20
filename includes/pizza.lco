@@ -7,7 +7,7 @@
 %-----------------------------------------------------------------------------
 \newkomavar*{uid}			\setkomavar{uid}[UID-Nummer]{AT\,U12345678}
 \newkomavar*{due}			\setkomavar{due}[Fällig]{\duedate}
-\setkomavar{invoice}		[Rechnung]		{\invoicenumber{}-\the\year}
+\setkomavar{invoice}		[Rechnung]		{\invoicenumber-\the\year}
 \setkomavar{date}			[Datum]			{\today}
 \setkomavar{subject}						{Rechnung Nr.~\usekomavar{invoice}}
 

@@ -1,0 +1,65 @@
+\documentclass[backaddress=false,11pt]{scrlttr2}
+
+\usepackage{rachnung}
+\usepackage{eurosym}
+
+\setkomavar{fromphone}{+49 (0)355 / 00 00 000 00}
+\setkomavar{fromaddress}{Musterstr. 00\\ 03000 Musterstadt}
+\setkomavar{subject}{Rechnung Nr.: XX-XX}
+
+% \parindent0pt
+
+	\TausenderTrennzeichenEin
+	\TausenderTrennzeichen{\kern .333pt .\kern .333pt}
+	\renewcommand*\LangDecimalSeparator{\kern .333pt ,\kern .333pt}
+
+\setkomavar{firsthead}{%
+	\null\hfill
+	\parbox[t][\headheight][t]{6cm}{%
+		\raggedright\color[gray]{.5}%
+		Muster GbR\\[\baselineskip]
+		Musterstr. 00\\
+		03000 Musterstadt\\[\baselineskip]
+		Telefon: \usekomavar{fromphone}\\
+		E-Mail: team@mustergbr.de\\
+		WWW: http://www.eample.com\\[\baselineskip]
+		Ust-Id: DE000000000\\
+	}%
+}
+
+\begin{document}
+	\begin{letter}{Kunde\\ \ \\ Kundenstr. 1\\ 03000  Kundenstadt}
+
+	
+		\opening{Sehr geehrter Herr Kunde,}
+
+		für den Auftrag Nr. 0000000 berechnen wir abschließend:
+
+		\vspace{10pt}
+% 		\Dollar
+
+% 	\sisetup{%
+% 				detect-all,
+% 				locale					=	US,
+% 				group-separator			=	{,},		% => 100,000.00
+% 				group-digits			=	integer,
+% 				group-minimum-digits	=	4,
+% 				input-ignore			=	{.}
+% 	}
+% \renewcommand*\LangDecimalSeparator{.}
+
+
+		%\Waehrung{\euro}
+		\Steuersatz{19}{7}
+
+		\begin{Rechnung}[N]
+			\Artikel{1}{Großer Auftrag}{75000,00}
+			\Artikel{2}{Kleiner Auftrag}{2500,00}
+			\Abschlagszahlung{35000,00}
+		\end{Rechnung}
+
+\noindent
+\Gesamtsumme\ darin enthalten \Mehrwertsteuer\ USt.
+
+	\end{letter}
+\end{document}
