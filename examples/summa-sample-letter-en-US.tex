@@ -15,7 +15,7 @@
 	\KOMAoptions{enlargefirstpage,
 				parskip=full}		% No paragraph indentation, done correctly
 %-----------------------------------------------------------------------------
-\setkomavar{fromname}		{Leo's Pizza \& Stuff}
+\setkomavar{fromname}		{Papa Leo's Pizza \& Stuff}
 \setkomavar{fromaddress}	{3316 Scheuvront Drive, Denver, CO 80231, USA}
 %-----------------------------------------------------------------------------
 \setkomavar{date}			[Date]			{\today}
@@ -27,7 +27,7 @@
 	\begin{center}{%
 		\fontsize{38}{40}\selectfont	% Switch to font size 38pt for header
 		\color{mycolor!50}				% The chosen color, half as colorful
-			\textsc{Leo's}				% => #48
+			\textsc{Papa Leo's}				% => #48
 		\color{mycolor}					% Regular, full hue again
 			\textsc{Pizzas \& Stuff}
 	}\\[-.35em]{%
@@ -100,7 +100,7 @@
 %-----------------------------------------------------------------------------	
 		\opening{Dear Ms. Ustomer,}
 
-		\textsc{Leo's Pizzas \& Stuff} appreciates your business.%
+		\textsc{Papa Leo's Pizzas \& Stuff} appreciates your business.%
 		\marginpar{\textbf{FIXME} •\;Currency •\;German •\;Decimals}	%FIXME
 
 		\begin{invoice}[N]				% N = Netto			(Net)
@@ -140,17 +140,25 @@
 		%		\InvoiceLine{How many}{Article number}{Description}{Unit price} 
 	%	\end{invoice*}
 
-We are looking forward to receiving the full amount of
- \Total\ (including \TaxAmnt\ in taxes) within \numberstringnum{\payperiod}
+% Temporarily redefine \par to remove from \Total and \TaxAmnt:
+{%
+	\def\par{\relax\ifhmode\unskip\fi\space\ignorespaces} 
+
+We are looking forward to receiving the full amount of\Total\ (including%
+\TaxAmnt\ in taxes) within \numberstringnum{\payperiod}\ %
  days{}, i.e. on or before \DayName{\year}{\month}{\day+\payperiod},
  \AdvanceDate[\payperiod]\today{}. 
+
+}
 
 		\AdvanceDate[-\payperiod]				% Restore current date
 		\enlargethispage{4\baselineskip}
 
 \setkomavar{signature}{%
-	\\[-3\baselineskip]
-	\includegraphics[width=4cm]{../includes/signature}
+	\\[-4\baselineskip]
+	\hspace{4cm}
+	\includegraphics[width=6.5cm]{../includes/signature1}
+	\\ \qquad Papa Leo
 }
 
 \closing{}					% No closing
