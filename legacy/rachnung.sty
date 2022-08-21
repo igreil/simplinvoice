@@ -1,33 +1,73 @@
 %-----------------------------------------------------------------------------
-% The original source files were: rechnung.dtx  (with options: 'package')
+% This is file summa.sty v.02 									(2022-08-20)
+% © 2022 Ingmar Greil					=>	https://github.com/igreil/summa
+%-----------------------------------------------------------------------------
+% This work may be distributed and/or modified under the conditions of the 
+% LATEX PROJECT PUBLIC LICENSE (LPPL), either version 1.3 of this license or 
+% (at your option) any later version. The latest version of this license can 
+% be found at http://www.latex-project.org/lppl.txt
+%-----------------------------------------------------------------------------
+% This work has the LPPL maintenance status "maintained".
+% The Current Maintainer of this work is Ingmar Greil <ingmar.greil@gmail.com>
+%-----------------------------------------------------------------------------
+% The original source files were:	rechnung.dtx
+% The original license terms were:
 %
-% Any modified versions of this file must be renamed with new filenames 
-% distinct from rechnung.sty.
-% 
-% This generated file may be distributed as long as the original source files,
-% as listed above, are part of the same distribution. (The sources need not 
-% necessarily be in the same archive or directory.)
+% "	Any modified versions of this file must be renamed with new filenames 
+%	distinct from rechnung.sty.
 %
-% File: rechnung.dtx Copyright (C) 1998 M G Berberich
-% berberic@fmi.uni-passau.de
+%	This generated file may be distributed as long as the original source 
+%	files, as listed above, are part of the same distribution. 
+%	(The sources need not ecessarily be in the same archive or directory.)"
+%-----------------------------------------------------------------------------
+% rechnung.dtx Copyright (C) 1998 M. G. Berberich <berberic@fmi.uni-passau.de>
+%-----------------------------------------------------------------------------
+% Initially forked from BMG Rechnungs Style 3.70 – rechung.sty
+% © 1998, 2001 M. G. Berberich, Ulrich Sibiller <uli42@web.de>
+%	=>	https://www.forwiss.uni-passau.de/~berberic/TeX/Rechnung/index.html
+%-----------------------------------------------------------------------------
+% Further contributions by:
+%
+%		– Tom Kazimiers		<tom@voodoo-arts.net>
+%							https://github.com/tomka/rechnung
+%
+%		- Andreas Scherer	https://github.com/ascherer/rechnung
+%
+%		– Sven Schoradt		<schoradt@netztierpfleger.de>
+%							https://github.com/schoradt/rechnung
+%
+%		– Felix Kußmaul		<thoth@chensthoth.de>
+%							https://github.com/horle/rechnung
+%
+%		- Lennart Hensler	<lennarthensler@aol.com>
+%							https://github.com/LennartH/rechnung
+%
+% 		- Stefan Sperling	<stsp@stsp.name>
+%							https://github.com/stspdotname/rechnung
+%
+%							https://github.com/lfuhr/rechnung
 %-----------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{rachnung}
-% Forked from BMG Rechnungs Style 3.70 – rechung.sty
-% © 1998, 2001 M. G. Berberich, Ulrich Sibiller
-% With further contributions by Tom Kazimiers, 
-% Sven Schoradt, Lennart Hensler and Stefan Sperling.
+\ProvidesPackage{rachnung}	% Remember, we had to rename this!
+	[2022/08/20 v0.2 Summa by Ingmar Greil]
 %-----------------------------------------------------------------------------
+
+\RequirePackage{tabto}				% We could probably do without …
+	\TabPositions{.7\linewidth}		% Sets a tabstop, accessible via \tab
+
 \RequirePackage{siunitx}
 	\sisetup{%
 				detect-all,
 				locale					=	DE,
-				group-separator			=	{.},		% => 10.000,00
+				group-separator			=	{\kern .333pt .\kern .333pt},
 				group-digits			=	integer,
 				group-minimum-digits	=	4,
 				input-ignore			=	{.}
 	}
 %-----------------------------------------------------------------------------
+
+%XYZZ 5
+
 \newcount\@RCHcnt 			\newcount\@RCHsum 			\newcount\@RCHtmp
 \newcount\@RCHmwst 			\newcount\@RCHmwsti 		\newcount\@RCHmwstii
 \newcount\@RCHtmptmp 		\newcount\@RCHabschln 		\newcount\@RCHabschlb
@@ -459,5 +499,5 @@
   \vskip\belowdisplayskip
 }
 \endinput
-%%
-%% End of file `rechnung.sty'.
+%
+% EOF rachnung.sty

@@ -1,4 +1,5 @@
 # summa v0.2
+[![GitHub](https://img.shields.io/github/license/samcarter/tikzlings.svg?color=blue)](http://www.latex-project.org/lppl.txt)
 
 A simple LaTeXclass for creating **invoices**, geared towards European
 (EU) users.
