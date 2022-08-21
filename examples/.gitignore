@@ -1,4 +1,3 @@
-*.sty
 *.aux
 *.lof
 *.log
@@ -8,14 +7,8 @@
 *.toc
 *.fmt
 *.fot
-*.cb
-*.cb2
-.*.lb
 *.dvi
 *.xdv
-*-converted-to.*
-*.pdf
-.pdf
 *.fdb_latexmk
 *.synctex
 *.synctex(busy)
